@@ -1,0 +1,1032 @@
+[
+  {
+    "sample_index": 1,
+    "product_title": "Dasani Purified Water, 16.9 fl oz, 24 Pack",
+    "category_route": "Beverages > Water",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300001",
+      "id": "wm-item-10300001",
+      "name": "Dasani Purified Water, 16.9 fl oz, 24 Pack",
+      "brandName": "Dasani",
+      "upc": "049000100105",
+      "canonicalUrl": "/ip/dasani-purified-water-16-9-fl-oz-24-pack/10300001",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/dasani-purified-water-16-9-fl-oz-24-pack_049000100105.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/dasani-purified-water-16-9-fl-oz-24-pack_049000100105.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 5.98,
+          "priceString": "$5.98"
+        },
+        "wasPrice": {
+          "price": 6.98,
+          "priceString": "$6.98"
+        },
+        "unitPrice": {
+          "priceString": "$0.06/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "2 for $10"
+          }
+        ],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Clip Coupon: Save $1"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Dasani Purified Water, 16.9 fl oz, 24 Pack",
+      "weight": "16.9 fl oz",
+      "regular_price": "$6.98",
+      "sale_price": "$5.98",
+      "volume_deals_description": "2 for $10",
+      "volume_deals_price": "$10.00",
+      "digital_deals_description": "Clip Coupon: Save $1",
+      "digital_deals_price": "$4.98",
+      "image_url": "https://i5.walmartimages.com/seo/dasani-purified-water-16-9-fl-oz-24-pack_049000100105.jpg",
+      "url": "https://www.walmart.com/ip/dasani-purified-water-16-9-fl-oz-24-pack/10300001",
+      "upc": "049000100105",
+      "gupc": "",
+      "ppm": "$0.06/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 2,
+    "product_title": "Great Value Purified Drinking Water, 16.9 fl oz, 40 Pack Bottles",
+    "category_route": "Beverages > Water",
+    "item_type": "STANDARD_ASSORTMENT",
+    "retailer_source_input": {
+      "usItemId": "10300002",
+      "id": "wm-item-10300002",
+      "name": "Great Value Purified Drinking Water, 16.9 fl oz, 40 Pack Bottles",
+      "brandName": "Great Value",
+      "upc": "078742100203",
+      "canonicalUrl": "/ip/great-value-purified-drinking-water-16-9-fl-oz-40-pack-bottles/10300002",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/great-value-purified-drinking-water-16-9-fl-oz-40-pack-bottles_078742100203.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/great-value-purified-drinking-water-16-9-fl-oz-40-pack-bottles_078742100203.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 5.36,
+          "priceString": "$5.36"
+        },
+        "wasPrice": {
+          "price": null,
+          "priceString": ""
+        },
+        "unitPrice": {
+          "priceString": "$0.04/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [],
+        "tags": []
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "Great Value",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Great Value Purified Drinking Water, 16.9 fl oz, 40 Pack Bottles",
+      "weight": "16.9 fl oz",
+      "regular_price": "$5.36",
+      "sale_price": "$5.36",
+      "volume_deals_description": "",
+      "volume_deals_price": "",
+      "digital_deals_description": "",
+      "digital_deals_price": "",
+      "image_url": "https://i5.walmartimages.com/seo/great-value-purified-drinking-water-16-9-fl-oz-40-pack-bottles_078742100203.jpg",
+      "url": "https://www.walmart.com/ip/great-value-purified-drinking-water-16-9-fl-oz-40-pack-bottles/10300002",
+      "upc": "078742100203",
+      "gupc": "",
+      "ppm": "$0.04/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 4,
+    "product_title": "Nestle Pure Life Purified Water, 16.9 fl oz, 28 Pack",
+    "category_route": "Beverages > Water",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300004",
+      "id": "wm-item-10300004",
+      "name": "Nestle Pure Life Purified Water, 16.9 fl oz, 28 Pack",
+      "brandName": "Nestle",
+      "upc": "068274100406",
+      "canonicalUrl": "/ip/nestle-pure-life-purified-water-16-9-fl-oz-28-pack/10300004",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/nestle-pure-life-purified-water-16-9-fl-oz-28-pack_068274100406.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/nestle-pure-life-purified-water-16-9-fl-oz-28-pack_068274100406.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 4.98,
+          "priceString": "$4.98"
+        },
+        "wasPrice": {
+          "price": 5.98,
+          "priceString": "$5.98"
+        },
+        "unitPrice": {
+          "priceString": "$0.05/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "Buy 2, Get 1 Free"
+          }
+        ],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Clip Coupon: Save $0.75"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Nestle Pure Life Purified Water, 16.9 fl oz, 28 Pack",
+      "weight": "16.9 fl oz",
+      "regular_price": "$5.98",
+      "sale_price": "$4.98",
+      "volume_deals_description": "Buy 2, Get 1 Free",
+      "volume_deals_price": "",
+      "digital_deals_description": "Clip Coupon: Save $0.75",
+      "digital_deals_price": "$4.23",
+      "image_url": "https://i5.walmartimages.com/seo/nestle-pure-life-purified-water-16-9-fl-oz-28-pack_068274100406.jpg",
+      "url": "https://www.walmart.com/ip/nestle-pure-life-purified-water-16-9-fl-oz-28-pack/10300004",
+      "upc": "068274100406",
+      "gupc": "",
+      "ppm": "$0.05/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 5,
+    "product_title": "Smartwater Vapor Distilled Water Bottles, 33.8 fl oz, 6 Pack",
+    "category_route": "Beverages > Water",
+    "item_type": "DIGITAL_COUPON",
+    "retailer_source_input": {
+      "usItemId": "10300005",
+      "id": "wm-item-10300005",
+      "name": "Smartwater Vapor Distilled Water Bottles, 33.8 fl oz, 6 Pack",
+      "brandName": "Smartwater",
+      "upc": "786162100504",
+      "canonicalUrl": "/ip/smartwater-vapor-distilled-water-bottles-33-8-fl-oz-6-pack/10300005",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/smartwater-vapor-distilled-water-bottles-33-8-fl-oz-6-pack_786162100504.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/smartwater-vapor-distilled-water-bottles-33-8-fl-oz-6-pack_786162100504.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 9.98,
+          "priceString": "$9.98"
+        },
+        "wasPrice": {
+          "price": 11.48,
+          "priceString": "$11.48"
+        },
+        "unitPrice": {
+          "priceString": "$0.10/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Save $1 with Digital Coupon"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Smartwater Vapor Distilled Water Bottles, 33.8 fl oz, 6 Pack",
+      "weight": "33.8 fl oz",
+      "regular_price": "$11.48",
+      "sale_price": "$9.98",
+      "volume_deals_description": "",
+      "volume_deals_price": "",
+      "digital_deals_description": "Save $1 with Digital Coupon",
+      "digital_deals_price": "$8.98",
+      "image_url": "https://i5.walmartimages.com/seo/smartwater-vapor-distilled-water-bottles-33-8-fl-oz-6-pack_786162100504.jpg",
+      "url": "https://www.walmart.com/ip/smartwater-vapor-distilled-water-bottles-33-8-fl-oz-6-pack/10300005",
+      "upc": "786162100504",
+      "gupc": "",
+      "ppm": "$0.10/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 8,
+    "product_title": "Ozarka 100% Natural Spring Water, 16.9 fl oz, 24 Pack",
+    "category_route": "Beverages > Water",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300008",
+      "id": "wm-item-10300008",
+      "name": "Ozarka 100% Natural Spring Water, 16.9 fl oz, 24 Pack",
+      "brandName": "Ozarka",
+      "upc": "074780100809",
+      "canonicalUrl": "/ip/ozarka-100-natural-spring-water-16-9-fl-oz-24-pack/10300008",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/ozarka-100-natural-spring-water-16-9-fl-oz-24-pack_074780100809.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/ozarka-100-natural-spring-water-16-9-fl-oz-24-pack_074780100809.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 5.48,
+          "priceString": "$5.48"
+        },
+        "wasPrice": {
+          "price": 6.28,
+          "priceString": "$6.28"
+        },
+        "unitPrice": {
+          "priceString": "$0.05/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "2 for $10"
+          }
+        ],
+        "tags": []
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Ozarka 100% Natural Spring Water, 16.9 fl oz, 24 Pack",
+      "weight": "16.9 fl oz",
+      "regular_price": "$6.28",
+      "sale_price": "$5.48",
+      "volume_deals_description": "2 for $10",
+      "volume_deals_price": "$10.00",
+      "digital_deals_description": "",
+      "digital_deals_price": "",
+      "image_url": "https://i5.walmartimages.com/seo/ozarka-100-natural-spring-water-16-9-fl-oz-24-pack_074780100809.jpg",
+      "url": "https://www.walmart.com/ip/ozarka-100-natural-spring-water-16-9-fl-oz-24-pack/10300008",
+      "upc": "074780100809",
+      "gupc": "",
+      "ppm": "$0.05/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 11,
+    "product_title": "Perrier Carbonated Mineral Water, 16.9 fl oz, 6 Plastic Bottles",
+    "category_route": "Beverages > Water",
+    "item_type": "DIGITAL_COUPON",
+    "retailer_source_input": {
+      "usItemId": "10300011",
+      "id": "wm-item-10300011",
+      "name": "Perrier Carbonated Mineral Water, 16.9 fl oz, 6 Plastic Bottles",
+      "brandName": "Perrier",
+      "upc": "074780101103",
+      "canonicalUrl": "/ip/perrier-carbonated-mineral-water-16-9-fl-oz-6-plastic-bottles/10300011",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/perrier-carbonated-mineral-water-16-9-fl-oz-6-plastic-bottles_074780101103.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/perrier-carbonated-mineral-water-16-9-fl-oz-6-plastic-bottles_074780101103.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 6.98,
+          "priceString": "$6.98"
+        },
+        "wasPrice": {
+          "price": 7.98,
+          "priceString": "$7.98"
+        },
+        "unitPrice": {
+          "priceString": "$0.14/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Clip Coupon: Save $1.00"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Perrier Carbonated Mineral Water, 16.9 fl oz, 6 Plastic Bottles",
+      "weight": "16.9 fl oz",
+      "regular_price": "$7.98",
+      "sale_price": "$6.98",
+      "volume_deals_description": "",
+      "volume_deals_price": "",
+      "digital_deals_description": "Clip Coupon: Save $1.00",
+      "digital_deals_price": "$5.98",
+      "image_url": "https://i5.walmartimages.com/seo/perrier-carbonated-mineral-water-16-9-fl-oz-6-plastic-bottles_074780101103.jpg",
+      "url": "https://www.walmart.com/ip/perrier-carbonated-mineral-water-16-9-fl-oz-6-plastic-bottles/10300011",
+      "upc": "074780101103",
+      "gupc": "",
+      "ppm": "$0.14/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 24,
+    "product_title": "Mountain Valley Spring Water, 33.8 fl oz Glass Bottle (Aisle Restock Pending)",
+    "category_route": "Beverages > Water",
+    "item_type": "UNAVAILABLE_STORE_ASSORTMENT",
+    "retailer_source_input": {
+      "usItemId": "10300024",
+      "id": "wm-item-10300024",
+      "name": "Mountain Valley Spring Water, 33.8 fl oz Glass Bottle (Aisle Restock Pending)",
+      "brandName": "Mountain",
+      "upc": "074780102407",
+      "canonicalUrl": "/ip/mountain-valley-spring-water-33-8-fl-oz-glass-bottle-aisle-restock-pending/10300024",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/mountain-valley-spring-water-33-8-fl-oz-glass-bottle-aisle-restock-pending_074780102407.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/mountain-valley-spring-water-33-8-fl-oz-glass-bottle-aisle-restock-pending_074780102407.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": null,
+          "priceString": ""
+        },
+        "wasPrice": {
+          "price": null,
+          "priceString": ""
+        },
+        "unitPrice": {
+          "priceString": "",
+          "unit": ""
+        }
+      },
+      "badges": {
+        "flags": [],
+        "tags": []
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "OUT_OF_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Water",
+      "product_title": "Mountain Valley Spring Water, 33.8 fl oz Glass Bottle (Aisle Restock Pending)",
+      "weight": "33.8 fl oz",
+      "regular_price": "",
+      "sale_price": "",
+      "volume_deals_description": "",
+      "volume_deals_price": "",
+      "digital_deals_description": "",
+      "digital_deals_price": "",
+      "image_url": "https://i5.walmartimages.com/seo/mountain-valley-spring-water-33-8-fl-oz-glass-bottle-aisle-restock-pending_074780102407.jpg",
+      "url": "https://www.walmart.com/ip/mountain-valley-spring-water-33-8-fl-oz-glass-bottle-aisle-restock-pending/10300024",
+      "upc": "",
+      "gupc": "",
+      "ppm": "",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "Retained unavailable store assortment - empty string per rule",
+      "ppm_source": "Unavailable item - empty string",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 25,
+    "product_title": "Coca-Cola Original Taste Soda, 12 fl oz, 12 Pack Cans",
+    "category_route": "Beverages > Soda & Soft Drinks",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300025",
+      "id": "wm-item-10300025",
+      "name": "Coca-Cola Original Taste Soda, 12 fl oz, 12 Pack Cans",
+      "brandName": "Coca-Cola",
+      "upc": "049000200102",
+      "canonicalUrl": "/ip/coca-cola-original-taste-soda-12-fl-oz-12-pack-cans/10300025",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/coca-cola-original-taste-soda-12-fl-oz-12-pack-cans_049000200102.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/coca-cola-original-taste-soda-12-fl-oz-12-pack-cans_049000200102.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 7.98,
+          "priceString": "$7.98"
+        },
+        "wasPrice": {
+          "price": 8.98,
+          "priceString": "$8.98"
+        },
+        "unitPrice": {
+          "priceString": "$0.06/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "3 for $20"
+          }
+        ],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Save $1 with Digital Coupon"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Soda & Soft Drinks",
+      "product_title": "Coca-Cola Original Taste Soda, 12 fl oz, 12 Pack Cans",
+      "weight": "144 fl oz",
+      "regular_price": "$8.98",
+      "sale_price": "$7.98",
+      "volume_deals_description": "3 for $20",
+      "volume_deals_price": "$20.00",
+      "digital_deals_description": "Save $1 with Digital Coupon",
+      "digital_deals_price": "$6.98",
+      "image_url": "https://i5.walmartimages.com/seo/coca-cola-original-taste-soda-12-fl-oz-12-pack-cans_049000200102.jpg",
+      "url": "https://www.walmart.com/ip/coca-cola-original-taste-soda-12-fl-oz-12-pack-cans/10300025",
+      "upc": "049000200102",
+      "gupc": "",
+      "ppm": "$0.06/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 26,
+    "product_title": "Pepsi Cola Soda Pop, 12 fl oz, 12 Pack Cans",
+    "category_route": "Beverages > Soda & Soft Drinks",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300026",
+      "id": "wm-item-10300026",
+      "name": "Pepsi Cola Soda Pop, 12 fl oz, 12 Pack Cans",
+      "brandName": "Pepsi",
+      "upc": "012000200205",
+      "canonicalUrl": "/ip/pepsi-cola-soda-pop-12-fl-oz-12-pack-cans/10300026",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/pepsi-cola-soda-pop-12-fl-oz-12-pack-cans_012000200205.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/pepsi-cola-soda-pop-12-fl-oz-12-pack-cans_012000200205.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 7.48,
+          "priceString": "$7.48"
+        },
+        "wasPrice": {
+          "price": 8.48,
+          "priceString": "$8.48"
+        },
+        "unitPrice": {
+          "priceString": "$0.05/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "3 for $19"
+          }
+        ],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Clip Coupon: Save $1.50"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Soda & Soft Drinks",
+      "product_title": "Pepsi Cola Soda Pop, 12 fl oz, 12 Pack Cans",
+      "weight": "144 fl oz",
+      "regular_price": "$8.48",
+      "sale_price": "$7.48",
+      "volume_deals_description": "3 for $19",
+      "volume_deals_price": "$19.00",
+      "digital_deals_description": "Clip Coupon: Save $1.50",
+      "digital_deals_price": "$5.98",
+      "image_url": "https://i5.walmartimages.com/seo/pepsi-cola-soda-pop-12-fl-oz-12-pack-cans_012000200205.jpg",
+      "url": "https://www.walmart.com/ip/pepsi-cola-soda-pop-12-fl-oz-12-pack-cans/10300026",
+      "upc": "012000200205",
+      "gupc": "",
+      "ppm": "$0.05/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 48,
+    "product_title": "Squirt Citrus Soda, 12 fl oz, 12 Pack Cans",
+    "category_route": "Beverages > Soda & Soft Drinks",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300048",
+      "id": "wm-item-10300048",
+      "name": "Squirt Citrus Soda, 12 fl oz, 12 Pack Cans",
+      "brandName": "Squirt",
+      "upc": "078000202403",
+      "canonicalUrl": "/ip/squirt-citrus-soda-12-fl-oz-12-pack-cans/10300048",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/squirt-citrus-soda-12-fl-oz-12-pack-cans_078000202403.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/squirt-citrus-soda-12-fl-oz-12-pack-cans_078000202403.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 7.48,
+          "priceString": "$7.48"
+        },
+        "wasPrice": {
+          "price": 8.48,
+          "priceString": "$8.48"
+        },
+        "unitPrice": {
+          "priceString": "$0.05/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "2 for $13"
+          }
+        ],
+        "tags": []
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Soda & Soft Drinks",
+      "product_title": "Squirt Citrus Soda, 12 fl oz, 12 Pack Cans",
+      "weight": "144 fl oz",
+      "regular_price": "$8.48",
+      "sale_price": "$7.48",
+      "volume_deals_description": "2 for $13",
+      "volume_deals_price": "$13.00",
+      "digital_deals_description": "",
+      "digital_deals_price": "",
+      "image_url": "https://i5.walmartimages.com/seo/squirt-citrus-soda-12-fl-oz-12-pack-cans_078000202403.jpg",
+      "url": "https://www.walmart.com/ip/squirt-citrus-soda-12-fl-oz-12-pack-cans/10300048",
+      "upc": "078000202403",
+      "gupc": "",
+      "ppm": "$0.05/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 51,
+    "product_title": "Simply Orange Pulp Free Juice, 52 fl oz Bottle",
+    "category_route": "Beverages > Juice & Cider",
+    "item_type": "VOLUME_DEAL",
+    "retailer_source_input": {
+      "usItemId": "10300051",
+      "id": "wm-item-10300051",
+      "name": "Simply Orange Pulp Free Juice, 52 fl oz Bottle",
+      "brandName": "Simply",
+      "upc": "048500300107",
+      "canonicalUrl": "/ip/simply-orange-pulp-free-juice-52-fl-oz-bottle/10300051",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/simply-orange-pulp-free-juice-52-fl-oz-bottle_048500300107.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/simply-orange-pulp-free-juice-52-fl-oz-bottle_048500300107.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": 3.98,
+          "priceString": "$3.98"
+        },
+        "wasPrice": {
+          "price": 4.38,
+          "priceString": "$4.38"
+        },
+        "unitPrice": {
+          "priceString": "$0.08/fl oz",
+          "unit": "fl oz"
+        }
+      },
+      "badges": {
+        "flags": [
+          {
+            "key": "promo",
+            "text": "2 for $7"
+          }
+        ],
+        "tags": [
+          {
+            "key": "coupon",
+            "text": "Clip Coupon: Save $0.50"
+          }
+        ]
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "IN_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Juice & Cider",
+      "product_title": "Simply Orange Pulp Free Juice, 52 fl oz Bottle",
+      "weight": "52 fl oz",
+      "regular_price": "$4.38",
+      "sale_price": "$3.98",
+      "volume_deals_description": "2 for $7",
+      "volume_deals_price": "$7.00",
+      "digital_deals_description": "Clip Coupon: Save $0.50",
+      "digital_deals_price": "$3.48",
+      "image_url": "https://i5.walmartimages.com/seo/simply-orange-pulp-free-juice-52-fl-oz-bottle_048500300107.jpg",
+      "url": "https://www.walmart.com/ip/simply-orange-pulp-free-juice-52-fl-oz-bottle/10300051",
+      "upc": "048500300107",
+      "gupc": "",
+      "ppm": "$0.08/fl oz",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "item.upc extracted directly from retailer payload (not parsed from URL)",
+      "ppm_source": "item.priceInfo.unitPrice.priceString scraped directly verbatim",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  },
+  {
+    "sample_index": 71,
+    "product_title": "Bolthouse Farms Vanilla Chai Tea Protein Shake, 15.2 fl oz",
+    "category_route": "Beverages > Juice & Cider",
+    "item_type": "UNAVAILABLE_STORE_ASSORTMENT",
+    "retailer_source_input": {
+      "usItemId": "10300071",
+      "id": "wm-item-10300071",
+      "name": "Bolthouse Farms Vanilla Chai Tea Protein Shake, 15.2 fl oz",
+      "brandName": "Bolthouse",
+      "upc": "071464302108",
+      "canonicalUrl": "/ip/bolthouse-farms-vanilla-chai-tea-protein-shake-15-2-fl-oz/10300071",
+      "imageInfo": {
+        "thumbnailUrl": "https://i5.walmartimages.com/seo/bolthouse-farms-vanilla-chai-tea-protein-shake-15-2-fl-oz_071464302108.jpg",
+        "allImages": [
+          "https://i5.walmartimages.com/seo/bolthouse-farms-vanilla-chai-tea-protein-shake-15-2-fl-oz_071464302108.jpg"
+        ]
+      },
+      "priceInfo": {
+        "currentPrice": {
+          "price": null,
+          "priceString": ""
+        },
+        "wasPrice": {
+          "price": null,
+          "priceString": ""
+        },
+        "unitPrice": {
+          "priceString": "",
+          "unit": ""
+        }
+      },
+      "badges": {
+        "flags": [],
+        "tags": []
+      },
+      "fulfillmentBadge": [
+        {
+          "fulfillmentText": "Pickup available today at Walmart Supercenter #4012",
+          "type": "PICKUP"
+        }
+      ],
+      "storeId": "4012",
+      "postalCode": "75001",
+      "inventory": {
+        "status": "OUT_OF_STOCK",
+        "inStoreAssortment": true
+      }
+    },
+    "extracted_schema_output": {
+      "zipcode": "75001",
+      "store_name": "Walmart Supercenter #4012",
+      "store_location": "1234 Main St, Dallas, TX 75201",
+      "store_logo": "https://i5.walmartimages.com/dfw/63fd9f59-b3e1/7a569e53-f29a-4c3d-bfaf-6f7a158bfadd/v1/walmartLogo.svg",
+      "store_brand": "no",
+      "category": "Beverages",
+      "sub_category": "Juice & Cider",
+      "product_title": "Bolthouse Farms Vanilla Chai Tea Protein Shake, 15.2 fl oz",
+      "weight": "15.2 fl oz",
+      "regular_price": "",
+      "sale_price": "",
+      "volume_deals_description": "",
+      "volume_deals_price": "",
+      "digital_deals_description": "",
+      "digital_deals_price": "",
+      "image_url": "https://i5.walmartimages.com/seo/bolthouse-farms-vanilla-chai-tea-protein-shake-15-2-fl-oz_071464302108.jpg",
+      "url": "https://www.walmart.com/ip/bolthouse-farms-vanilla-chai-tea-protein-shake-15-2-fl-oz/10300071",
+      "upc": "",
+      "gupc": "",
+      "ppm": "",
+      "unit_price": "",
+      "crawl_date": "2026-10-23"
+    },
+    "field_trace_verification": {
+      "upc_source": "Retained unavailable store assortment - empty string per rule",
+      "ppm_source": "Unavailable item - empty string",
+      "deals_separation": "Volume deal terms and digital coupon terms isolated into separate dedicated columns",
+      "fulfillment_lock": "Verified storeId 4012 and PICKUP fulfillment in response payload"
+    }
+  }
+]

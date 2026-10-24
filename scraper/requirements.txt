@@ -1,0 +1,5 @@
+playwright==1.49.1
+azure-storage-blob==12.24.0
+azure-identity==1.19.0
+azure-keyvault-secrets==4.9.0
+python-dotenv==1.0.1

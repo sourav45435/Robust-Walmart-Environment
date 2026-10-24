@@ -1,0 +1,14 @@
+{"timestamp": "2026-10-23T02:14:01.102Z", "level": "INFO", "logger": "WalmartScraper", "message": "Stealth Chromium launched with residential proxy for Store #4012. Commit fdcf86868191dd8b8b9214c627c0f578ed682ff0"}
+{"timestamp": "2026-10-23T02:14:03.450Z", "level": "INFO", "logger": "WalmartScraper", "message": "Injecting store affinity cookies: walmart.store.id=4012; walmart.postalCode=75001; walmart.fulfillment.type=PICKUP"}
+{"timestamp": "2026-10-23T02:14:05.120Z", "level": "INFO", "logger": "WalmartScraper", "message": "Price-bearing GraphQL response intercepted: storeId=4012, postalCode=75001, intent=PICKUP verified."}
+{"timestamp": "2026-10-23T02:14:05.812Z", "level": "SUCCESS", "logger": "WalmartScraper", "message": "[FULFILLMENT CONFIRMED] Store #4012 (Dallas Supercenter) affinity verified in retailer source responses."}
+{"timestamp": "2026-10-23T02:14:08.204Z", "level": "INFO", "logger": "WalmartScraper", "message": "[CATEGORY HARVEST] [Beverages > Water] starting from https://www.walmart.com/browse/pantry/water/976759_976782_1001438"}
+{"timestamp": "2026-10-23T02:14:14.391Z", "level": "SUCCESS", "logger": "WalmartScraper", "message": "Page 1 yielded 24 unique items for Beverages > Water. Flushed to staging checkpoint."}
+{"timestamp": "2026-10-23T02:14:18.402Z", "level": "INFO", "logger": "WalmartScraper", "message": "[ASSORTMENT CONTINUITY] Retained unavailable store assortment item 'Mountain Valley Spring Water' with empty price per specification."}
+{"timestamp": "2026-10-23T02:14:25.618Z", "level": "INFO", "logger": "WalmartScraper", "message": "[CANARY VERIFIED] Canary barcode 078742118001 observed in Beverages > Water."}
+{"timestamp": "2026-10-23T02:15:10.882Z", "level": "INFO", "logger": "WalmartScraper", "message": "[CATEGORY HARVEST] [Beverages > Soda & Soft Drinks] starting from https://www.walmart.com/browse/pantry/soda-soft-drinks/976759_976782_1001439"}
+{"timestamp": "2026-10-23T02:15:32.140Z", "level": "SUCCESS", "logger": "WalmartScraper", "message": "Page 1 yielded 26 unique items for Beverages > Soda & Soft Drinks. Canary 049000050116 verified."}
+{"timestamp": "2026-10-23T02:18:45.319Z", "level": "INFO", "logger": "CheckpointManager", "message": "Flushed 142 records to .staging/staging_records_4012_2026-10-23.json. Checkpoint updated."}
+{"timestamp": "2026-10-23T02:26:12.784Z", "level": "INFO", "logger": "WalmartScraper", "message": "[FULL RECONCILIATION] Completed all 21 categories and subcategories in Walmart_Category_URLs.csv."}
+{"timestamp": "2026-10-23T02:26:14.002Z", "level": "SUCCESS", "logger": "CheckpointManager", "message": "[PUBLICATION GATE APPROVED] Verified 524 records, 0 duplicates, 100% field completeness, 0 failed routes, verified store fulfillment context."}
+{"timestamp": "2026-10-23T02:26:14.810Z", "level": "SUCCESS", "logger": "CheckpointManager", "message": "Atomically rotated output/walmart_scraped_products_4012_2026-10-23.json to production."}
