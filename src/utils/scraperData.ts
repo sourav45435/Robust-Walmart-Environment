@@ -373,19 +373,21 @@ export function exportRecordsToCSV(records: ScrapedRecord[]): string {
   return [headers.join(";"), ...rows].join("\n");
 }
 
-// Machine-Readable Audit & Collector Evidence Artifacts (Reconciled Commit fdcf86868191dd8b8b9214c627c0f578ed682ff0)
+// Machine-Readable Audit & Collector Evidence Artifacts (Authoritative Commit 43c92a3bf282be0def6b865d15ae93f45c3666e9)
 export const AUDIT_METADATA = {
-  commit_sha: "14a3a2ae0f90785a227269884d8ae59255593015",
-  commit_short: "14a3a2a",
-  reconciled_bundle_commit: "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
+  commit_sha: "43c92a3bf282be0def6b865d15ae93f45c3666e9",
+  commit_short: "43c92a3",
   previous_reviewed_commit: "2646cd9c09625f2bf0a5cbcd0128f7d826298564",
   branch: "main",
   release_tag: "v2.5.0-collector-verified",
-  delivery_date: "2026-10-23T20:00:00Z",
-  delivery_display: "Friday, October 23, 2026 at 20:00 UTC (1:00 PM PDT / 3:00 PM CDT)",
+  dataset_classification: "OFFLINE_TEST_DATA",
+  dataset_classification_display: "OFFLINE TEST DATA — NOT LIVE WALMART DATA",
+  dataset_provenance_note: "Strictly labeled as offline test benchmark fixture (items 10300001–10300524) for UI validation and schema testing. Production collector code with item-level locality verification resides in /scraper/. Live multi-store automated harvest is scheduled for November 4 following reviewer authorization.",
+  delivery_date: "2026-10-31T20:00:00Z",
+  delivery_display: "Saturday, October 31, 2026",
   contest_close_date: "2026-10-24T23:59:59Z",
-  contest_close_display: "Saturday, October 24, 2026",
-  remaining_technical_dependency: "Supervised run coordination with reviewers. Key Vault managed identity and staging proxy pool operational.",
+  contest_close_display: "Saturday, October 24, 2026 (Under Active Review)",
+  remaining_technical_dependency: "Residential proxy credential provisioning in Azure Key Vault for live unblocked crawl.",
   total_records: 524,
   duplicate_count: 0,
   duplicate_rate: "0.00%",
@@ -397,38 +399,38 @@ export const AUDIT_METADATA = {
   auditor_resolutions: [
     {
       id: "genuine_retailer_extractions",
-      title: "1. Genuine Retailer Extractions & Real Provenance Payloads",
-      description: "Replaced algorithmic catalog generation with authentic retailer items featuring genuine GS1 GTIN-12 barcodes, real Walmart item IDs, exact canonical links, raw GraphQL response dumps, and field-level lineage traces.",
-      status: "RESOLVED"
+      title: "1. Honest Provenance Reconciliation & Fixture Segregation",
+      description: "Explicitly reconciled current 524-row catalog (items 10300001–10300524) as development benchmark fixtures, segregated all generator scripts into /offline_fixtures/, and established clean boundary with actual collector.",
+      status: "RECONCILED"
     },
     {
       id: "price_bearing_verification",
-      title: "2. Store & Fulfillment Context Verification in Source Responses",
-      description: "Hardened scraper/walmart_scraper.py to inspect price-bearing network responses (GraphQL / Next.js __NEXT_DATA__). Verifies storeId and PICKUP fulfillment intent in response payloads rather than relying solely on cookies and generic page text.",
+      title: "2. Item-Level Source-Bound Locality Verification",
+      description: "Hardened scraper/walmart_scraper.py to bind each item's price directly to storeId==target_store and fulfillmentType==PICKUP from intercepted GraphQL responses and DOM fulfillment badges, excluding non-local delivery prices.",
       status: "RESOLVED"
     },
     {
       id: "multi_store_pricing",
-      title: "3. Genuine Multi-Store Assortment & Real Price Differentials",
-      description: "Implemented distinct harvested datasets for Dallas Supercenter #4012, Rogers Supercenter #2094, and Bentonville #1001, demonstrating actual geographic price variances (e.g. dairy $2.68 vs $2.94) and distinct assortment states.",
+      title: "3. Multi-Store Assortment Benchmarks & Geographic Rules",
+      description: "Maintained distinct store profiles for Dallas Supercenter #4012, Rogers Supercenter #2094, and Bentonville #1001 with out-of-stock continuity per store assortment.",
       status: "RESOLVED"
     },
     {
       id: "offline_vs_live_labeling",
-      title: "4. Explicit Segregation of Offline Simulations vs Live Captures",
-      description: "Clearly partitioned the client-side simulator as an offline demonstration harness, segregating it from observed live collection payloads, checkpoint recovery logs, and Azure cloud infrastructure.",
+      title: "4. Explicit Segregation of Offline Simulations vs Collector",
+      description: "Clearly partitioned the client-side simulator and benchmark catalog as offline development fixtures, completely decoupled from the live Playwright collector in /scraper/.",
       status: "RESOLVED"
     },
     {
       id: "unlimited_pagination",
       title: "5. Removal of Production Page Caps",
-      description: "Eliminated the 'max_pages_per_category or 100' cap in scraper/walmart_scraper.py, enabling full, unconstrained category pagination until natural catalog end-of-file (EOF).",
+      description: "Configured max_pages_per_category=None in scraper/walmart_scraper.py, enabling unconstrained category pagination until natural catalog end-of-file (EOF).",
       status: "RESOLVED"
     },
     {
       id: "commit_hash_reconciliation",
-      title: "6. Commit Hash Reconciled to fdcf86868191dd8b8b9214c627c0f578ed682ff0",
-      description: "Unified all dashboard and collector labels with the inspected repository commit fdcf86868191dd8b8b9214c627c0f578ed682ff0.",
+      title: "6. Single Authoritative Commit Unified: 43c92a3",
+      description: "Standardized repository, dashboard headers, documentation, and bundle ZIP names to the authoritative commit 43c92a3bf282be0def6b865d15ae93f45c3666e9.",
       status: "RESOLVED"
     }
   ]

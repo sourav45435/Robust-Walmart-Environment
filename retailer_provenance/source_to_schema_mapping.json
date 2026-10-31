@@ -1,5 +1,6 @@
 {
-  "commit_hash": "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
+  "commit_hash": "43c92a3bf282be0def6b865d15ae93f45c3666e9",
+  "artifact_classification": "SPECIFICATION_MAPPING_CONTRACT",
   "specification_version": "v2.5.0-verified",
   "target_schema_fields_count": 22,
   "fields_mapping": [

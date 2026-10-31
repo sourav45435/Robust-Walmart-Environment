@@ -3,7 +3,7 @@
  * Direct Retailer Field Trace Data & Schema Mapping
  * Provides verifiable field-level lineage between Walmart's GraphQL / Next.js
  * response payloads and the conforming 22-field output schema.
- * Reconciled Commit: fdcf86868191dd8b8b9214c627c0f578ed682ff0
+ * Reconciled Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9
  */
 
 export interface FieldTraceItem {

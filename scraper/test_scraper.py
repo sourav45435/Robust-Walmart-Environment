@@ -14,6 +14,7 @@ Comprehensive unit tests for Walmart scraper logic:
 import unittest
 import os
 import sys
+import json
 
 # Ensure scraper directory is in Python path
 sys.path.insert(0, os.path.dirname(__file__))
@@ -240,6 +241,53 @@ class TestWalmartScraperRules(unittest.TestCase):
         )
         self.assertTrue(approved3)
         self.assertIn("APPROVED", reason3)
+
+        # Cleanup
+        if os.path.exists(test_staging):
+            shutil.rmtree(test_staging)
+        if os.path.exists(test_output):
+            shutil.rmtree(test_output)
+
+    def test_raw_evidence_durable_storage(self):
+        """Rule: Raw network response payloads are persisted to JSONL in staging and promoted on gate approval."""
+        from checkpoint_manager import CheckpointManager
+        import shutil
+
+        test_staging = ".staging_test_raw"
+        test_output = "output_test_raw"
+        if os.path.exists(test_staging):
+            shutil.rmtree(test_staging)
+        if os.path.exists(test_output):
+            shutil.rmtree(test_output)
+
+        mgr = CheckpointManager("4012", "2026-10-22", staging_dir=test_staging, output_dir=test_output)
+
+        # 1. Append raw evidence capture
+        test_endpoint = "https://www.walmart.com/orchestra/home/graphql/browse/v1"
+        test_request = {"storeId": "4012", "postalCode": "75001", "catId": "976759"}
+        test_response = {"data": {"search": {"searchResult": {"itemStacks": [{"items": [{"id": "1001", "name": "Test Milk"}]}]}}}}
+        mgr.append_raw_evidence(test_endpoint, test_request, test_response)
+
+        # Verify raw evidence file exists and contains valid JSON line
+        self.assertTrue(os.path.exists(mgr.raw_evidence_file))
+        with open(mgr.raw_evidence_file, "r", encoding="utf-8") as f:
+            lines = f.readlines()
+            self.assertEqual(len(lines), 1)
+            entry = json.loads(lines[0])
+            self.assertEqual(entry["endpoint"], test_endpoint)
+            self.assertEqual(entry["request"]["storeId"], "4012")
+
+        # 2. Add enough records for promotion
+        records = [
+            {"zipcode": "75001", "product_title": f"Item {i}", "upc": f"078742{i:06d}", "regular_price": "$3.00", "sale_price": "$2.50"}
+            for i in range(505)
+        ]
+        mgr.append_staging_records(records)
+
+        # 3. Promote to production
+        promoted = mgr.promote_staging_to_production(min_threshold=500, store_fulfillment_verified=True)
+        self.assertTrue(promoted)
+        self.assertTrue(os.path.exists(mgr.production_evidence_file), "Raw evidence must be promoted to output directory")
 
         # Cleanup
         if os.path.exists(test_staging):

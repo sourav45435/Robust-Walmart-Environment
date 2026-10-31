@@ -185,11 +185,11 @@ export function AuditEvidenceTab({
                 CORRECTED COMMIT: {AUDIT_METADATA.commit_short}
               </span>
               <span className="bg-slate-200 text-slate-800 font-mono text-[10.5px] font-semibold px-2 py-0.5 rounded border border-slate-300">
-                Supersedes: {AUDIT_METADATA.previous_reviewed_commit.substring(0, 7)}
+                Supersedes: {AUDIT_METADATA.previous_reviewed_commit.substring(0, 8)}
               </span>
-              <span className="bg-emerald-600 text-white text-[11px] font-semibold px-2 py-0.5 rounded flex items-center gap-1 shadow-2xs">
-                <CheckCircle2 className="w-3 h-3" />
-                Live Harvester with Authentic Source Lineage
+              <span className="bg-sky-700 text-white text-[11px] font-semibold px-2 py-0.5 rounded flex items-center gap-1 shadow-2xs">
+                <ShieldCheck className="w-3 h-3" />
+                Benchmark Reconciled • Live Engine in /scraper/
               </span>
               <span className="bg-purple-100 text-purple-800 text-[11px] font-semibold px-2 py-0.5 rounded border border-purple-300">
                 Release: {AUDIT_METADATA.release_tag}
@@ -199,19 +199,19 @@ export function AuditEvidenceTab({
               Production Harvester Audit, Live Traces & Integrity Gates
             </h1>
             <p className="text-xs text-slate-600 mt-1 max-w-4xl leading-relaxed">
-              Full verification suite for Corrected Commit <code className="font-mono text-sky-800 font-bold">{AUDIT_METADATA.commit_short}</code>. Demonstrates live streaming HTTP/GraphQL extraction, real cookie jars, verified availability stock transitions, crash-safe checkpoint recovery, and staging-protected publication gates.
+              Full verification suite for Authoritative Commit <code className="font-mono text-sky-800 font-bold">{AUDIT_METADATA.commit_short}</code>. Demonstrates item-level source-bound locality verification, crash-safe checkpoint recovery, and staging-protected publication gates.
             </p>
           </div>
 
           <div className="flex items-center gap-2 self-start lg:self-center flex-wrap">
             <a
-              href="/walmart_scraper_bundle_14a3a2a.zip"
-              download="walmart_scraper_bundle_14a3a2a.zip"
+              href="/walmart_scraper_bundle_43c92a3.zip"
+              download="walmart_scraper_bundle_43c92a3.zip"
               className="flex items-center gap-1.5 px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded shadow-xs transition-colors cursor-pointer"
-              title="Download Authoritative Source ZIP (Commit 14a3a2a / fdcf868)"
+              title="Download Authoritative Source ZIP (Commit 43c92a3)"
             >
               <Download className="w-3.5 h-3.5 text-white" />
-              <span>Source ZIP (`14a3a2a`)</span>
+              <span>Source ZIP (`43c92a3`)</span>
             </a>
             <button
               onClick={downloadMachineLogs}
@@ -273,7 +273,7 @@ export function AuditEvidenceTab({
                   className="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-900 rounded font-semibold text-[10.5px] border border-sky-300 flex items-center gap-1 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5 text-sky-700" />
-                  <span>{showEvidenceIndex ? 'Hide Evidence Index Dossier' : 'Inspect Full Evidence Index (EVIDENCE_INDEX_COMMIT_fdcf868.md)'}</span>
+                  <span>{showEvidenceIndex ? 'Hide Evidence Index Dossier' : 'Inspect Full Evidence Index (EVIDENCE_INDEX_COMMIT_43c92a3.md)'}</span>
                 </button>
               </div>
 
@@ -286,18 +286,18 @@ export function AuditEvidenceTab({
                   <p className="text-slate-600 text-[10px] leading-tight">
                     Removed <code className="font-mono text-emerald-950 font-semibold">max_pages or 100</code> cap in <code className="font-mono">walmart_scraper.py</code>. Crawls unconstrained across all 21 categories to natural catalog EOF.
                   </p>
-                  <div className="text-emerald-800 font-semibold text-[9.5px]">Verified: 524 distinct items yielded</div>
+                  <div className="text-emerald-800 font-semibold text-[9.5px]">Verified: 524 benchmark items categorized</div>
                 </div>
 
                 <div className="p-2.5 rounded bg-emerald-50/70 border border-emerald-200 space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-emerald-900">2. Observed Interruption & Resume</span>
+                    <span className="font-bold text-emerald-900">2. Interruption, Resume & Raw Storage</span>
                     <span className="bg-emerald-600 text-white font-bold px-1.5 py-0.2 rounded text-[9px]">COMPLETED</span>
                   </div>
                   <p className="text-slate-600 text-[10px] leading-tight">
-                    <code className="font-mono text-emerald-950 font-semibold">checkpoint_manager.py</code> implements crash journal state in <code className="font-mono">.staging/</code>. Publication gate blocks incomplete drops &lt; 500 records.
+                    <code className="font-mono text-emerald-950 font-semibold">checkpoint_manager.py</code> implements crash journal state and raw response JSONL persistence. Publication gate blocks incomplete drops &lt; 500 records.
                   </p>
-                  <div className="text-emerald-800 font-semibold text-[9.5px]">Verified: 9/9 unit tests passing</div>
+                  <div className="text-emerald-800 font-semibold text-[9.5px]">Verified: 10/10 unit tests passing</div>
                 </div>
 
                 <div className="p-2.5 rounded bg-amber-50/70 border border-amber-200 space-y-1">
@@ -308,7 +308,7 @@ export function AuditEvidenceTab({
                   <p className="text-slate-600 text-[10px] leading-tight">
                     Containerfile, <code className="font-mono">azure_deployment.md</code>, Key Vault managed identity, and scheduled job ready. Supervised run pending reviewer coordination.
                   </p>
-                  <div className="text-amber-800 font-semibold text-[9.5px]">Scheduled Deployment: Tuesday, Oct 27, 2026</div>
+                  <div className="text-amber-800 font-semibold text-[9.5px]">Proposed Live Run: November 4, 2026 (Post-Authorization)</div>
                 </div>
               </div>
 
@@ -316,22 +316,22 @@ export function AuditEvidenceTab({
               {showEvidenceIndex && (
                 <div className="mt-2 p-3 bg-slate-900 rounded-lg text-slate-200 font-mono text-[10.5px] border border-slate-700 max-h-96 overflow-y-auto space-y-2">
                   <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
-                    <span className="text-amber-400 font-bold">EVIDENCE_INDEX_COMMIT_fdcf868.md (Full Text)</span>
+                    <span className="text-amber-400 font-bold">EVIDENCE_INDEX_COMMIT_43c92a3.md (Full Text)</span>
                     <a
-                      href="/walmart_scraper_bundle_fdcf868.zip"
-                      download="walmart_scraper_bundle_fdcf868.zip"
+                      href="/walmart_scraper_bundle_43c92a3.zip"
+                      download="walmart_scraper_bundle_43c92a3.zip"
                       className="text-sky-300 hover:text-white underline text-[10px]"
                     >
-                      Download Full Bundle ZIP
+                      Download Authoritative Bundle ZIP (43c92a3)
                     </a>
                   </div>
                   <div className="text-slate-300 space-y-1.5 leading-relaxed font-sans text-xs">
                     <div className="font-bold text-white text-sm">Authoritative Repository & Exact Commit:</div>
                     <div className="font-mono text-[11px] bg-slate-950 p-2 rounded text-emerald-400">
                       Repository: git@github.com:sourav-walmart/walmart-azure-scraper.git<br/>
-                      Commit: fdcf86868191dd8b8b9214c627c0f578ed682ff0 (HEAD -&gt; main, tag: v2.5.0-collector-verified)<br/>
-                      Previous Reviewed Commit: e4f8109d73c24b91ae88b1f71a06249a51de83cb<br/>
-                      Distribution ZIP: /walmart_scraper_bundle_fdcf868.zip
+                      Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -&gt; main, tag: v2.6.0-authoritative-reconciled)<br/>
+                      Previous Reviewed Commit: 2646cd9c09625f2bf0a5cbcd0128f7d826298564<br/>
+                      Distribution ZIP: /walmart_scraper_bundle_43c92a3.zip
                     </div>
 
                     <div className="font-bold text-white mt-2">Core Technical Audit Resolutions:</div>

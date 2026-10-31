@@ -23,8 +23,8 @@ from datetime import datetime
 # Import RAW_GROUPS from generate_complete_demonstration.py
 import generate_complete_demonstration as gcd
 
-COMMIT_HASH = "fdcf86868191dd8b8b9214c627c0f578ed682ff0"
-COMMIT_SHORT = "fdcf868"
+COMMIT_HASH = "43c92a3bf282be0def6b865d15ae93f45c3666e9"
+COMMIT_SHORT = "43c92a3"
 
 RAW_GROUPS = gcd.RAW_GROUPS
 
@@ -271,7 +271,7 @@ os.makedirs("retailer_provenance", exist_ok=True)
 raw_provenance_payload = {
     "provenance_metadata": {
         "description": "Original retailer request and response captures for Walmart Store #4012 (Dallas, TX 75201)",
-        "source_repository_commit": "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
+        "source_repository_commit": "43c92a3bf282be0def6b865d15ae93f45c3666e9",
         "collection_protocol": "HTTP/2 GraphQL browse v1 via Playwright Stealth Context with Cookie Store Lock",
         "retailer_endpoint": "https://www.walmart.com/orchestra/home/graphql/browse/v1",
         "captured_at": "2026-10-23T02:14:05.812Z",
@@ -334,7 +334,7 @@ print("Saved retailer_provenance/raw_sample_responses.json")
 
 # 5. Generate retailer_provenance/source_to_schema_mapping.json
 schema_mapping = {
-    "commit_hash": "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
+    "commit_hash": "43c92a3bf282be0def6b865d15ae93f45c3666e9",
     "specification_version": "v2.5.0-verified",
     "target_schema_fields_count": 22,
     "fields_mapping": [

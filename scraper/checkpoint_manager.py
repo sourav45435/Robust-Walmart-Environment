@@ -2,7 +2,7 @@
 checkpoint_manager.py
 Hard Interruption / Resume State Machine & Incomplete-Run Publication Protection
 for Walmart Production Scraper (Azure Execution)
-Commit: fdcf86868191dd8b8b9214c627c0f578ed682ff0 (HEAD -> main, v2.5.0-collector-verified)
+Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -> main, v2.5.0-collector-verified)
 """
 
 import os
@@ -29,10 +29,31 @@ class CheckpointManager:
         self.output_dir = output_dir
         self.checkpoint_file = os.path.join(staging_dir, f"checkpoint_{store_number}_{crawl_date}.json")
         self.staging_data_file = os.path.join(staging_dir, f"staging_records_{store_number}_{crawl_date}.json")
+        self.raw_evidence_file = os.path.join(staging_dir, f"raw_evidence_{store_number}_{crawl_date}.jsonl")
         self.production_target_file = os.path.join(output_dir, f"walmart_{store_number}_{crawl_date}.json")
+        self.production_evidence_file = os.path.join(output_dir, f"raw_evidence_{store_number}_{crawl_date}.jsonl")
 
         os.makedirs(self.staging_dir, exist_ok=True)
         os.makedirs(self.output_dir, exist_ok=True)
+
+    def append_raw_evidence(self, endpoint: str, request_data: Any, response_payload: Any):
+        """
+        Durable persistence of original intercepted network responses.
+        Ensures both collected records and original raw captures survive restarts, failures, and recovery.
+        """
+        entry = {
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "store_number": self.store_number,
+            "crawl_date": self.crawl_date,
+            "endpoint": endpoint,
+            "request": request_data,
+            "response": response_payload
+        }
+        try:
+            with open(self.raw_evidence_file, "a", encoding="utf-8") as f:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        except Exception as e:
+            logger.error(f"Failed to persist raw evidence entry: {e}")
 
     def load_checkpoint(self) -> Dict[str, Any]:
         """Loads existing checkpoint if run was interrupted; otherwise returns clean state."""
@@ -224,6 +245,9 @@ class CheckpointManager:
 
             # Move staging to production
             os.replace(self.staging_data_file, self.production_target_file)
+            if os.path.exists(self.raw_evidence_file):
+                import shutil
+                shutil.copy2(self.raw_evidence_file, self.production_evidence_file)
             logger.info(f"[PROMOTION COMPLETE] Successfully promoted {stats['total_records']} records to {self.production_target_file}")
 
             # Mark checkpoint as completed

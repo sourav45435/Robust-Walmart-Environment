@@ -344,7 +344,7 @@ export default function App() {
             >
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
               <span>Audit & Live Evidence</span>
-              <span className="bg-emerald-500 text-white text-[9px] px-1 py-0.2 rounded-full font-mono font-bold">fdcf868</span>
+              <span className="bg-emerald-500 text-white text-[9px] px-1 py-0.2 rounded-full font-mono font-bold">43c92a3</span>
             </button>
 
             <button
@@ -377,8 +377,8 @@ export default function App() {
               }`}
             >
               <Database className="w-3.5 h-3.5" />
-              <span>524+ Live Dataset</span>
-              <span className="bg-emerald-500 text-white text-[9px] px-1 py-0.2 rounded-full font-bold">524</span>
+              <span>524 Benchmark Dataset</span>
+              <span className="bg-sky-600 text-white text-[9px] px-1 py-0.2 rounded font-bold">BENCHMARK</span>
             </button>
 
             <button
@@ -456,13 +456,13 @@ export default function App() {
           </div>
 
           <a
-            href="/walmart_scraper_bundle_14a3a2a.zip"
-            download="walmart_scraper_bundle_14a3a2a.zip"
+            href="/walmart_scraper_bundle_43c92a3.zip"
+            download="walmart_scraper_bundle_43c92a3.zip"
             className="flex items-center gap-1 px-2.5 py-1 bg-amber-600 hover:bg-amber-500 text-white rounded font-semibold shadow-xs transition-colors cursor-pointer text-xs"
-            title="Download Authoritative Source ZIP Bundle (Commit 14a3a2a / fdcf868)"
+            title="Download Authoritative Source ZIP Bundle (Commit 43c92a3)"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="hidden lg:inline">Source ZIP (14a3a2a)</span>
+            <span className="hidden lg:inline">Source ZIP (43c92a3)</span>
             <span className="lg:hidden">ZIP</span>
           </a>
 
@@ -485,6 +485,31 @@ export default function App() {
           </button>
         </div>
       </header>
+
+      {/* Reviewer Invariant: Prominent Offline Benchmark Warning Banner */}
+      <div className="bg-amber-400 text-slate-950 px-3 md:px-5 py-2 text-xs font-bold flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-500 shadow-xs z-20">
+        <div className="flex items-center gap-2">
+          <AlertTriangle className="w-4 h-4 shrink-0 text-slate-900" />
+          <span>
+            <strong className="tracking-wide uppercase bg-slate-900 text-amber-300 px-1.5 py-0.5 rounded text-[10.5px] mr-1.5 font-mono">
+              OFFLINE TEST DATA — NOT LIVE WALMART DATA
+            </strong>
+            The current 524 records serve as an offline benchmark fixture. Real collector code with source-bound locality is in <code className="bg-amber-500/50 px-1 py-0.5 rounded font-mono">/scraper/</code>. Live multi-store run scheduled for Nov 4 pending reviewer authorization.
+          </span>
+        </div>
+        <div className="flex items-center gap-2 shrink-0 text-[11px]">
+          <span className="font-mono bg-amber-200 text-slate-900 px-2 py-0.5 rounded border border-amber-300">
+            Commit 43c92a3
+          </span>
+          <a
+            href="/walmart_scraper_bundle_43c92a3.zip"
+            download="walmart_scraper_bundle_43c92a3.zip"
+            className="bg-slate-900 hover:bg-slate-800 text-white px-2.5 py-1 rounded font-semibold transition-colors"
+          >
+            Download Bundle ZIP
+          </a>
+        </div>
+      </div>
 
       {/* Global Toast Notification on Store Change */}
       {globalToast && (
@@ -831,7 +856,7 @@ export default function App() {
                           </div>
                           <div className="text-[8.5px] font-bold text-emerald-700 mt-0.5 flex items-center gap-1">
                             <span className={`w-1.5 h-1.5 rounded-full ${isRunning ? 'bg-amber-500 animate-ping' : 'bg-emerald-500'}`}></span>
-                            <span>{isRunning ? `Filling (${simulatedRecordsCount}/524)...` : '524 Genuine (0 Duplicates)'}</span>
+                            <span>{isRunning ? `Filling (${simulatedRecordsCount}/524)...` : '524 Benchmark Records (0 Duplicates)'}</span>
                           </div>
                         </div>
 
@@ -1736,12 +1761,16 @@ export default function App() {
       {activeTab === 'dataset' && (
         <div className="flex-1 p-4 max-w-7xl mx-auto w-full space-y-4">
           {/* Header Stats Banner */}
-          <div className="bg-white rounded-lg border border-sky-300 p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div className="bg-white rounded-lg border border-amber-300 p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
-                <h2 className="text-xl font-extrabold text-[#004f98]">Live Production Scraped Dataset</h2>
-                <span className="bg-sky-100 text-[#004f98] font-bold text-xs px-2 py-0.5 rounded">Store #{selectedStore} ({currentStoreDetails.city}, {currentStoreDetails.state} {currentStoreDetails.zip})</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="bg-amber-500 text-slate-950 font-mono font-bold text-xs px-2 py-0.5 rounded border border-amber-600">
+                  OFFLINE TEST DATA — NOT LIVE WALMART DATA
+                </span>
+                <h2 className="text-xl font-extrabold text-slate-900">524 Benchmark Dataset</h2>
+                <span className="bg-slate-100 text-slate-700 font-bold text-xs px-2 py-0.5 rounded border border-slate-200">
+                  Store #{selectedStore} ({currentStoreDetails.city}, {currentStoreDetails.state})
+                </span>
                 <button
                   onClick={() => setActiveTab('stores')}
                   className="px-2 py-0.5 bg-[#0071dc] hover:bg-[#005bb5] text-white font-bold text-[11px] rounded flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
@@ -1751,8 +1780,8 @@ export default function App() {
                   <span>Switch State / Store</span>
                 </button>
               </div>
-              <p className="text-xs text-slate-500 mt-1">
-                Verified dataset exceeding contest minimum (524 records). Strictly follows all 22 required fields in order. Dynamically mapped to {currentStoreDetails.name}.
+              <p className="text-xs text-slate-600 mt-1 max-w-4xl leading-relaxed">
+                <strong>Provenance Classification:</strong> Offline development fixture and schema benchmark. Demonstrates strict 22-field ordering, private-brand detection, volume &amp; digital deals, and unavailable-assortment continuity. Real collector execution against live Walmart endpoints (500+ items) is scheduled for November 4 upon reviewer test authorization.
               </p>
             </div>
 
@@ -2047,7 +2076,7 @@ export default function App() {
                   <div className="text-base font-extrabold text-[#004f98] font-mono mt-0.5">
                     {simulatedRecordsCount} <span className="text-[11px] font-normal text-slate-500">/ 524</span>
                   </div>
-                  <div className="text-[9px] text-emerald-700 font-semibold">100% Genuine Retailer Items</div>
+                  <div className="text-[9px] text-amber-700 font-semibold">Offline Benchmark Items</div>
                 </div>
 
                 <div className="bg-sky-50/80 border border-sky-100 rounded p-2">
@@ -2233,7 +2262,7 @@ export default function App() {
                   Walmart Scraper Contest Review Package & Technical Dossier
                 </h2>
                 <p className="text-xs text-sky-100 mt-0.5">
-                  Full 11-point criteria breakdown, verified 524 genuine-record dataset, live collection logs, and multi-location architecture.
+                  Full 11-point criteria breakdown, conforming 524-record benchmark dataset, live collector architecture, and multi-location setup.
                 </p>
               </div>
 
@@ -2316,7 +2345,7 @@ export default function App() {
                       1. Versioned Source Code & Running Instructions
                     </span>
                     <span className="font-mono text-[10px] bg-sky-100 text-sky-800 font-bold px-1.5 py-0.5 rounded">
-                      fdcf868 (v2.5.0)
+                      43c92a3 (v2.6.0)
                     </span>
                   </div>
                   <p className="text-slate-600 text-[11px] leading-relaxed mb-2">
@@ -2339,14 +2368,14 @@ export default function App() {
                   <div className="flex items-center justify-between mb-1.5">
                     <span className="font-extrabold text-slate-900 text-sm flex items-center gap-1.5">
                       <Database className="w-4 h-4 text-emerald-700" />
-                      2. Actual Collected JSON (524 Genuine Items)
+                      2. Conforming Benchmark Dataset JSON (524 Items)
                     </span>
-                    <span className="font-mono text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">
-                      Exceeds 500
+                    <span className="font-mono text-[10px] bg-amber-100 text-amber-800 font-bold px-1.5 py-0.5 rounded border border-amber-300">
+                      OFFLINE BENCHMARK
                     </span>
                   </div>
                   <p className="text-slate-600 text-[11px] leading-relaxed mb-2">
-                    The dataset contains exactly <strong className="text-emerald-700">524 genuine, distinct products</strong> collected across all 10 core categories. Every record adheres strictly to the exact 22-field sequence mandated in the specification with zero nulls (empty strings <code className="font-mono text-slate-700 bg-white px-1 rounded">''</code> for missing attributes, <code className="font-mono text-slate-700 bg-white px-1 rounded">gupc=''</code> and <code className="font-mono text-slate-700 bg-white px-1 rounded">unit_price=''</code>).
+                    The dataset contains exactly <strong className="text-slate-900">524 conforming benchmark records</strong> (classified as offline test fixtures) demonstrating all 10 core categories. Every record adheres strictly to the exact 22-field sequence mandated in the specification with zero nulls (empty strings <code className="font-mono text-slate-700 bg-white px-1 rounded">''</code> for missing attributes, <code className="font-mono text-slate-700 bg-white px-1 rounded">gupc=''</code> and <code className="font-mono text-slate-700 bg-white px-1 rounded">unit_price=''</code>).
                   </p>
                   <div className="grid grid-cols-3 gap-2 bg-white p-2 rounded border border-slate-200 text-center">
                     <div>
@@ -2431,11 +2460,11 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 text-[11px]">
                 <div className="bg-white p-2.5 rounded border border-emerald-300 shadow-2xs">
                   <div className="font-bold text-emerald-800 flex items-center gap-1 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-emerald-600"></span>
-                    <span>Completed Live Collection</span>
+                    <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                    <span>Production Architecture & Benchmark</span>
                   </div>
                   <p className="text-slate-600 text-[10px] leading-relaxed">
-                    Live harvests for Store #4012 (Dallas, TX), Store #2094 (Rogers, AR), and Store #1001 (Bentonville, AR). 524 genuine records, live cookie injection, and full subcategory traversal.
+                    Store profiles for Dallas (#4012), Rogers (#2094), and Bentonville (#1001). 524 benchmark records, live cookie injection, and full subcategory traversal.
                   </p>
                 </div>
 
@@ -2655,7 +2684,7 @@ export default function App() {
                     <div className="text-slate-800 font-semibold">
                       {inspectRecord._lineage?.observation_type === 'CARRIED_UNAVAILABLE_ASSORTMENT' || !inspectRecord.sale_price
                         ? 'Carried Assortment (Unavailable In Stock)'
-                        : 'Live Fresh Evidence (Current Crawl)'}
+                        : 'Conforming Catalog Record (Offline Benchmark)'}
                     </div>
                   </div>
 
@@ -2836,7 +2865,7 @@ const CHECKPOINT_CODE = `"""
 checkpoint_manager.py
 Hard Interruption / Resume State Machine & Incomplete-Run Publication Protection
 for Walmart Production Scraper (Azure Execution)
-Commit: fdcf86868191dd8b8b9214c627c0f578ed682ff0 (HEAD -> main, v2.5.0-collector-verified)
+Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -> main, v2.6.0-authoritative-reconciled)
 """
 
 import os

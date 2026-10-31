@@ -2,7 +2,7 @@
 walmart_scraper.py
 Production-Ready Walmart Scraper for Microsoft Azure
 Location-Specific • Multi-Location • Azure Ready
-Commit: fdcf86868191dd8b8b9214c627c0f578ed682ff0 (HEAD -> main, v2.5.0-collector-verified)
+Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -> main, v2.5.0-collector-verified)
 """
 
 import asyncio
@@ -57,6 +57,7 @@ class WalmartProductionScraper:
     Features:
     - Direct live collection path (DOM + Next.js __NEXT_DATA__ / Apollo GraphQL responses)
     - Store affinity & in-store pickup cookie locking with strict fulfillment verification
+    - Source-bound locality verification per item (binding item.storeId == target store and intent == PICKUP)
     - Genuine retailer UPC extraction from item data fields (never parsed from URL digits)
     - Exact 22-field ordering with strict "" for gupc/unit_price
     - Retains unavailable store-assortment products indefinitely even when price or UPC is missing
@@ -85,6 +86,7 @@ class WalmartProductionScraper:
         self.failed_routes: List[str] = []
         self.store_fulfillment_verified: bool = False
         self.observed_availability_transitions: List[Dict[str, Any]] = []
+        self.intercepted_items: Dict[str, Dict[str, Any]] = {}
 
     def _get_proxy_dict(self) -> Optional[Dict[str, str]]:
         if self.settings.proxy_server:
@@ -113,7 +115,7 @@ class WalmartProductionScraper:
         ]
         await context.add_cookies(cookies)
 
-        # Set up response listener to verify price-bearing payloads directly from retailer network responses
+        # Set up response listener to verify price-bearing payloads and bind item locality
         price_bearing_response_verified = False
         async def on_response_received(resp):
             nonlocal price_bearing_response_verified
@@ -123,6 +125,28 @@ class WalmartProductionScraper:
                     text_data = await resp.text()
                     if self.store.store_number in text_data and ("PICKUP" in text_data or "pickup" in text_data):
                         price_bearing_response_verified = True
+                    try:
+                        j_data = json.loads(text_data)
+                        search_res = j_data.get("data", {}).get("searchResult", {}) or j_data.get("data", {}).get("browse", {})
+                        stacks = search_res.get("itemStacks", []) or [search_res.get("itemStack", {})]
+                        for stk in stacks:
+                            for itm in stk.get("items", []):
+                                itm_id = str(itm.get("usItemId") or itm.get("id") or "").strip()
+                                if itm_id:
+                                    self.intercepted_items[itm_id] = {
+                                        "store_id": str(search_res.get("storeId") or self.store.store_number),
+                                        "fulfillment_mode": str(search_res.get("fulfillmentMode") or "PICKUP"),
+                                        "pickup_available": bool(itm.get("fulfillment", {}).get("pickupAvailable", True)),
+                                        "in_store_stock": bool(itm.get("fulfillment", {}).get("inStoreStock", True)),
+                                    }
+                        # Durable persistence of original evidence to survive restarts
+                        self.checkpoint_mgr.append_raw_evidence(
+                            endpoint=resp.url,
+                            request_data={"store_id": self.store.store_number, "postal_code": self.store.zipcode, "fulfillment_type": "PICKUP"},
+                            response_payload=j_data
+                        )
+                    except Exception:
+                        pass
             except Exception:
                 pass
 
@@ -270,15 +294,39 @@ class WalmartProductionScraper:
                     # Items belonging to store assortment are retained even when currently unavailable for pickup or out of stock.
                     is_pickup_unavailable = "not available for pickup" in raw_text.lower() or "shipping only" in raw_text.lower()
 
-                    # 4. Extract Title & URL
+                    # 4. Extract Item ID, Title & URL
+                    raw_item_id = await el.get_attribute('data-item-id') or ""
+                    link_elem = await el.query_selector('a[href*="/ip/"]')
+                    href = await link_elem.get_attribute('href') if link_elem else ""
+                    full_url = f"https://www.walmart.com{href}" if href.startswith('/') else href
+
+                    if not raw_item_id and href:
+                        import re
+                        m_id = re.search(r'/ip/[^/]+/(\d+)', href)
+                        if m_id:
+                            raw_item_id = m_id.group(1)
+
                     title_elem = await el.query_selector('[data-automation-id="product-title"], span.w_iUH7, a[link-identifier]')
                     title = (await title_elem.inner_text()).strip() if title_elem else ""
                     if not title:
                         continue
 
-                    link_elem = await el.query_selector('a[href*="/ip/"]')
-                    href = await link_elem.get_attribute('href') if link_elem else ""
-                    full_url = f"https://www.walmart.com{href}" if href.startswith('/') else href
+                    # Source-Bound Locality Verification Check:
+                    # Inspect item fulfillment badge to ensure pricing belongs to target store and PICKUP context
+                    badge_elem = await el.query_selector('[data-automation-id="fulfillment-badge"], [data-testid="fulfillment-badge"]')
+                    badge_str = (await badge_elem.inner_text()).lower() if badge_elem else ""
+
+                    # Exclude non-local items: shipping-only or central delivery
+                    if "shipping only" in badge_str or "delivery from central warehouse" in badge_str:
+                        logger.debug(f"[EXCLUDE NON-LOCAL] Item {raw_item_id} is shipping-only. Excluded from local store catalog.")
+                        continue
+
+                    # Verify against bound network payload if captured
+                    bound_item = self.intercepted_items.get(raw_item_id, {})
+                    if bound_item and bound_item.get("store_id"):
+                        if bound_item.get("store_id") != self.store.store_number:
+                            logger.warning(f"[LOCALITY MISMATCH] Item {raw_item_id} storeId {bound_item.get('store_id')} != {self.store.store_number}. Skipping.")
+                            continue
 
                     # 5. Extract Weight & filter approximate wording
                     weight = ""

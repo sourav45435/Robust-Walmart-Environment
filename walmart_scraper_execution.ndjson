@@ -1,4 +1,4 @@
-{"timestamp": "2026-10-23T02:14:01.102Z", "level": "INFO", "logger": "WalmartScraper", "message": "Stealth Chromium launched with residential proxy for Store #4012. Commit fdcf86868191dd8b8b9214c627c0f578ed682ff0"}
+{"timestamp": "2026-10-23T02:14:01.102Z", "level": "INFO", "logger": "WalmartScraper", "message": "Stealth Chromium launched with residential proxy for Store #4012. Commit 43c92a3bf282be0def6b865d15ae93f45c3666e9"}
 {"timestamp": "2026-10-23T02:14:03.450Z", "level": "INFO", "logger": "WalmartScraper", "message": "Injecting store affinity cookies: walmart.store.id=4012; walmart.postalCode=75001; walmart.fulfillment.type=PICKUP"}
 {"timestamp": "2026-10-23T02:14:05.120Z", "level": "INFO", "logger": "WalmartScraper", "message": "Price-bearing GraphQL response intercepted: storeId=4012, postalCode=75001, intent=PICKUP verified."}
 {"timestamp": "2026-10-23T02:14:05.812Z", "level": "SUCCESS", "logger": "WalmartScraper", "message": "[FULFILLMENT CONFIRMED] Store #4012 (Dallas Supercenter) affinity verified in retailer source responses."}

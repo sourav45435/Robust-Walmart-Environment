@@ -1,10 +1,10 @@
 {
   "provenance_metadata": {
-    "description": "Original retailer request and response captures for Walmart Store #4012 (Dallas, TX 75201)",
-    "source_repository_commit": "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
-    "collection_protocol": "HTTP/2 GraphQL browse v1 via Playwright Stealth Context with Cookie Store Lock",
+    "artifact_classification": "DEVELOPMENT_BENCHMARK_SPECIFICATION_FIXTURE",
+    "description": "Baseline specification and GraphQL schema contract fixture for Store #4012 (Dallas, TX 75201) parser test verification. Documented as development baseline fixture (Items 10300001–10300524), pending live proxy harvest.",
+    "source_repository_commit": "43c92a3bf282be0def6b865d15ae93f45c3666e9",
+    "collection_protocol": "GraphQL browse v1 schema contract for parser validation",
     "retailer_endpoint": "https://www.walmart.com/orchestra/home/graphql/browse/v1",
-    "captured_at": "2026-10-23T02:14:05.812Z",
     "store_number": "4012",
     "postal_code": "75001",
     "fulfillment_mode": "PICKUP"

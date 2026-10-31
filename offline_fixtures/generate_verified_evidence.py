@@ -44,8 +44,8 @@ REQUIRED_FIELD_ORDER = [
     "crawl_date"
 ]
 
-COMMIT_HASH = "fdcf86868191dd8b8b9214c627c0f578ed682ff0"
-COMMIT_SHORT = "fdcf868"
+COMMIT_HASH = "43c92a3bf282be0def6b865d15ae93f45c3666e9"
+COMMIT_SHORT = "43c92a3"
 
 def compute_check_digit(d11: str) -> str:
     odd_sum = sum(int(d11[i]) for i in range(0, 11, 2))
