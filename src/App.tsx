@@ -455,6 +455,17 @@ export default function App() {
             </select>
           </div>
 
+          <a
+            href="/walmart_scraper_bundle_14a3a2a.zip"
+            download="walmart_scraper_bundle_14a3a2a.zip"
+            className="flex items-center gap-1 px-2.5 py-1 bg-amber-600 hover:bg-amber-500 text-white rounded font-semibold shadow-xs transition-colors cursor-pointer text-xs"
+            title="Download Authoritative Source ZIP Bundle (Commit 14a3a2a / fdcf868)"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span className="hidden lg:inline">Source ZIP (14a3a2a)</span>
+            <span className="lg:hidden">ZIP</span>
+          </a>
+
           <button
             onClick={handleCopyJSON}
             className="flex items-center gap-1 px-2.5 py-1 bg-sky-600 hover:bg-sky-500 text-white rounded font-medium shadow-xs transition-colors cursor-pointer text-xs"

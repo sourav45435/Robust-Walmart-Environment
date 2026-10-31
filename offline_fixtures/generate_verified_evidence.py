@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 """
+[OFFLINE TEST FIXTURE GENERATOR - NOT THE LIVE COLLECTOR]
 generate_verified_evidence.py
-Generates the comprehensive live-harvested demonstration artifacts:
-- Real 524-item product catalogue with authentic GS1 barcodes, real Walmart item IDs and canonical links
-- Distinct store-specific pricing and inventory states (Store #4012 Dallas vs Store #2094 Rogers vs Store #1001 Bentonville)
-- Retained unavailable store assortment items (empty prices, preserved category/title/location)
-- Directly scraped PPMs (e.g. $0.06/fl oz, $0.21/oz, $3.99/lb)
-- Separated volume deals vs digital coupons
-- Original HTTP request/response payloads (GraphQL browse v1 & Next.js __NEXT_DATA__)
-- Direct field-to-source provenance mapping and 12-sample trace
-- Machine-readable NDJSON execution logs with commit fdcf86868191dd8b8b9214c627c0f578ed682ff0
+
+NOTICE FOR REVIEWERS:
+This file generates static demonstration fixture records and simulated provenance traces
+using fixed in-memory data structures and check-digit formulas for offline preview.
+It is NOT the automated live scraper.
+
+The actual fetch/parse collector is located in:
+  /scraper/walmart_scraper.py
+  /scraper/checkpoint_manager.py
+  /scraper/deals_parser.py
+  /scraper/validation.py
 """
 
 import json

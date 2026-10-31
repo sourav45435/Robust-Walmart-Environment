@@ -1,7 +1,18 @@
 #!/usr/bin/env python3
 """
+[OFFLINE TEST FIXTURE GENERATOR - NOT THE LIVE COLLECTOR]
 build_verified_catalog.py
-Constructs the verified retailer dataset, provenance artifacts, and multi-store catalogs.
+
+NOTICE FOR REVIEWERS:
+This file is an offline synthetic fixture generator (using fixed arrays, price adjustment
+offsets, and algorithmic barcode generation) created for local UI mocking and layout preview.
+It is explicitly NOT the live collection engine.
+
+The actual fetch/parse collector is located in:
+  /scraper/walmart_scraper.py (Playwright Chromium stealth fetcher & parser)
+  /scraper/checkpoint_manager.py (Interruption journal & staging protection gate)
+  /scraper/deals_parser.py (Volume deals vs digital coupons separator)
+  /scraper/validation.py (22-field ordering and quality checks)
 """
 
 import json

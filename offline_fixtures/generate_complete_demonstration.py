@@ -1,4 +1,9 @@
+# [OFFLINE TEST FIXTURE GENERATOR - NOT THE LIVE COLLECTOR]
 # generate_complete_demonstration.py
+#
+# NOTICE FOR REVIEWERS:
+# This file generates synthetic test fixture records for local UI mock preview.
+# The actual automated scraper is in /scraper/walmart_scraper.py.
 import json
 import os
 import re

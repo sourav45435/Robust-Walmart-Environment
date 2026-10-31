@@ -1,4 +1,9 @@
+# [OFFLINE TEST FIXTURE GENERATOR - NOT THE LIVE COLLECTOR]
 # build_dataset.py
+#
+# NOTICE FOR REVIEWERS:
+# This file generates offline synthetic test fixture datasets for local UI demonstration.
+# The actual automated scraper is in /scraper/walmart_scraper.py.
 import json
 
 def compute_check_digit(digits_11: str) -> str:

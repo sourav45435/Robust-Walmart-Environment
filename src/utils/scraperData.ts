@@ -375,9 +375,10 @@ export function exportRecordsToCSV(records: ScrapedRecord[]): string {
 
 // Machine-Readable Audit & Collector Evidence Artifacts (Reconciled Commit fdcf86868191dd8b8b9214c627c0f578ed682ff0)
 export const AUDIT_METADATA = {
-  commit_sha: "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
-  commit_short: "fdcf868",
-  previous_reviewed_commit: "e4f8109d73c24b91ae88b1f71a06249a51de83cb",
+  commit_sha: "14a3a2ae0f90785a227269884d8ae59255593015",
+  commit_short: "14a3a2a",
+  reconciled_bundle_commit: "fdcf86868191dd8b8b9214c627c0f578ed682ff0",
+  previous_reviewed_commit: "2646cd9c09625f2bf0a5cbcd0128f7d826298564",
   branch: "main",
   release_tag: "v2.5.0-collector-verified",
   delivery_date: "2026-10-23T20:00:00Z",
