@@ -2,12 +2,13 @@
 checkpoint_manager.py
 Hard Interruption / Resume State Machine & Incomplete-Run Publication Protection
 for Walmart Production Scraper (Azure Execution)
-Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -> main, v2.5.0-collector-verified)
+Commit: d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac (HEAD -> main)
 """
 
 import os
 import json
 import logging
+import shutil
 from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
 
@@ -20,6 +21,7 @@ class CheckpointManager:
     2. Hard Interruption Recovery: Resumes runs seamlessly after SIGINT, OOM, or node reboot.
     3. Staging Isolation: Keeps partial/in-progress data in .staging/ directory.
     4. Publication Gate: Blocks staging files from reaching production container until 100% verified.
+    5. Durable Raw Evidence: Persists actual captured request/response network pairs to JSONL.
     """
 
     def __init__(self, store_number: str, crawl_date: str, staging_dir: str = ".staging", output_dir: str = "output"):
@@ -32,6 +34,8 @@ class CheckpointManager:
         self.raw_evidence_file = os.path.join(staging_dir, f"raw_evidence_{store_number}_{crawl_date}.jsonl")
         self.production_target_file = os.path.join(output_dir, f"walmart_{store_number}_{crawl_date}.json")
         self.production_evidence_file = os.path.join(output_dir, f"raw_evidence_{store_number}_{crawl_date}.jsonl")
+        self.raw_evidence_write_failed = False
+        self.raw_evidence_count = 0
 
         os.makedirs(self.staging_dir, exist_ok=True)
         os.makedirs(self.output_dir, exist_ok=True)
@@ -40,6 +44,7 @@ class CheckpointManager:
         """
         Durable persistence of original intercepted network responses.
         Ensures both collected records and original raw captures survive restarts, failures, and recovery.
+        Does not swallow write errors.
         """
         entry = {
             "timestamp": datetime.utcnow().isoformat() + "Z",
@@ -52,8 +57,11 @@ class CheckpointManager:
         try:
             with open(self.raw_evidence_file, "a", encoding="utf-8") as f:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+            self.raw_evidence_count += 1
         except Exception as e:
+            self.raw_evidence_write_failed = True
             logger.error(f"Failed to persist raw evidence entry: {e}")
+            raise IOError(f"Critical failure writing raw evidence: {e}")
 
     def load_checkpoint(self) -> Dict[str, Any]:
         """Loads existing checkpoint if run was interrupted; otherwise returns clean state."""
@@ -170,6 +178,17 @@ class CheckpointManager:
             "publication_approved": False
         }
 
+        # Gate Rule 0: Raw evidence write integrity & captures
+        if self.raw_evidence_write_failed:
+            reason = "BLOCKED: Raw evidence write failure detected during collection."
+            logger.error(f"[PUBLICATION GATE BLOCKED] {reason}")
+            return False, reason, audit_stats
+
+        if not os.path.exists(self.raw_evidence_file) or os.path.getsize(self.raw_evidence_file) == 0:
+            reason = "BLOCKED: Missing or empty raw evidence captures. Original evidence required for publication."
+            logger.error(f"[PUBLICATION GATE BLOCKED] {reason}")
+            return False, reason, audit_stats
+
         # Gate Rule 1: Fulfillment context must be verified
         if not store_fulfillment_verified:
             reason = "BLOCKED: Store fulfillment verification failed or unconfirmed."
@@ -222,9 +241,8 @@ class CheckpointManager:
         store_fulfillment_verified: bool = True
     ) -> bool:
         """
-        Atomically promotes staging file to production target only when publication gate passes.
-        Preserves existing production file as .bak before overwriting.
-        Cleans up checkpoint upon successful promotion.
+        Atomically promotes staging file and raw evidence package to production only when publication gate passes.
+        Ensures failed or missing evidence prevents publication and preserves the last good package if either write fails.
         """
         approved, reason, stats = self.evaluate_publication_gate(
             min_threshold=min_threshold,
@@ -237,26 +255,54 @@ class CheckpointManager:
             return False
 
         bak_file = f"{self.production_target_file}.bak"
+        bak_evidence = f"{self.production_evidence_file}.bak"
+        tmp_target = f"{self.production_target_file}.tmp"
+        tmp_evidence = f"{self.production_evidence_file}.tmp"
+
         try:
+            # 1. Verify both staging files exist and are valid before modifying production
+            if not os.path.exists(self.staging_data_file) or os.path.getsize(self.staging_data_file) == 0:
+                logger.error("[PROMOTION ERROR] Staging data file missing or empty.")
+                return False
+            if not os.path.exists(self.raw_evidence_file) or os.path.getsize(self.raw_evidence_file) == 0:
+                logger.error("[PROMOTION ERROR] Raw evidence file missing or empty.")
+                return False
+
+            # 2. Stage new files to temporary destination files first
+            shutil.copy2(self.staging_data_file, tmp_target)
+            shutil.copy2(self.raw_evidence_file, tmp_evidence)
+
+            # 3. Preserve current production package as .bak (both product & evidence)
             if os.path.exists(self.production_target_file):
                 if os.path.exists(bak_file):
                     os.remove(bak_file)
-                os.replace(self.production_target_file, bak_file)
+                shutil.copy2(self.production_target_file, bak_file)
+            if os.path.exists(self.production_evidence_file):
+                if os.path.exists(bak_evidence):
+                    os.remove(bak_evidence)
+                shutil.copy2(self.production_evidence_file, bak_evidence)
 
-            # Move staging to production
-            os.replace(self.staging_data_file, self.production_target_file)
-            if os.path.exists(self.raw_evidence_file):
-                import shutil
-                shutil.copy2(self.raw_evidence_file, self.production_evidence_file)
-            logger.info(f"[PROMOTION COMPLETE] Successfully promoted {stats['total_records']} records to {self.production_target_file}")
+            # 4. Atomically swap both files into production
+            os.replace(tmp_target, self.production_target_file)
+            os.replace(tmp_evidence, self.production_evidence_file)
 
-            # Mark checkpoint as completed
+            # Staging promotion succeeded; clean up staging data file and checkpoint
+            if os.path.exists(self.staging_data_file):
+                os.remove(self.staging_data_file)
             if os.path.exists(self.checkpoint_file):
                 os.remove(self.checkpoint_file)
 
+            logger.info(f"[PROMOTION COMPLETE] Successfully promoted {stats['total_records']} records and evidence package to {self.output_dir}")
             return True
         except Exception as e:
-            logger.error(f"[PROMOTION ERROR] Failed to promote staging file: {e}")
-            if os.path.exists(bak_file) and not os.path.exists(self.production_target_file):
-                os.replace(bak_file, self.production_target_file)
+            logger.error(f"[PROMOTION ERROR] Transaction failed during promotion: {e}. Restoring last good package.")
+            # Rollback: ensure last good package is preserved
+            if os.path.exists(bak_file):
+                shutil.copy2(bak_file, self.production_target_file)
+            if os.path.exists(bak_evidence):
+                shutil.copy2(bak_evidence, self.production_evidence_file)
+            if os.path.exists(tmp_target):
+                os.remove(tmp_target)
+            if os.path.exists(tmp_evidence):
+                os.remove(tmp_evidence)
             return False

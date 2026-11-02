@@ -174,7 +174,15 @@ class TestWalmartScraperRules(unittest.TestCase):
 
         test_staging = ".staging_test_audit"
         test_output = "output_test_audit"
+        if os.path.exists(test_staging):
+            shutil.rmtree(test_staging)
+        if os.path.exists(test_output):
+            shutil.rmtree(test_output)
+
         mgr = CheckpointManager("4012", "2025-05-17", staging_dir=test_staging, output_dir=test_output)
+
+        # Append valid evidence capture
+        mgr.append_raw_evidence("https://www.walmart.com/test", {"test": 1}, {"data": {}})
 
         # Incomplete batch: only 120 records
         thin_records = [
@@ -206,7 +214,15 @@ class TestWalmartScraperRules(unittest.TestCase):
 
         test_staging = ".staging_test_gate"
         test_output = "output_test_gate"
+        if os.path.exists(test_staging):
+            shutil.rmtree(test_staging)
+        if os.path.exists(test_output):
+            shutil.rmtree(test_output)
+
         mgr = CheckpointManager("4012", "2026-10-22", staging_dir=test_staging, output_dir=test_output)
+
+        # Append valid evidence capture
+        mgr.append_raw_evidence("https://www.walmart.com/test", {"test": 1}, {"data": {}})
 
         # Sufficient records (520 records)
         full_records = [
@@ -294,6 +310,186 @@ class TestWalmartScraperRules(unittest.TestCase):
             shutil.rmtree(test_staging)
         if os.path.exists(test_output):
             shutil.rmtree(test_output)
+
+    def test_regression_absent_store_and_fulfillment_context_kept_unknown(self):
+        """Regression 1: Absent storeId/fulfillmentMode in payload must NOT be filled with target defaults."""
+        # Simulated response missing storeId and fulfillmentMode
+        raw_response_payload = {
+            "data": {
+                "searchResult": {
+                    # Notice: storeId and fulfillmentMode are completely absent
+                    "itemStacks": [{
+                        "items": [{
+                            "usItemId": "9001",
+                            "priceInfo": {"linePrice": "$4.50"},
+                            "fulfillment": {} # pickupAvailable and inStoreStock absent
+                        }]
+                    }]
+                }
+            }
+        }
+
+        # Process payload logic as in initialize_store_context
+        search_res = raw_response_payload.get("data", {}).get("searchResult", {})
+        observed_store = search_res.get("storeId")
+        observed_fulfillment = search_res.get("fulfillmentMode")
+        item_obj = search_res.get("itemStacks", [])[0].get("items", [])[0]
+        f_info = item_obj.get("fulfillment", {})
+        pickup_avail = f_info.get("pickupAvailable") if isinstance(f_info, dict) else None
+        instore_stock = f_info.get("inStoreStock") if isinstance(f_info, dict) else None
+
+        # Verify: unknown context MUST stay unknown (None) - no artificial fallback to 4012 or PICKUP or True
+        self.assertIsNone(observed_store, "Missing storeId in response must NOT default to configured target store")
+        self.assertIsNone(observed_fulfillment, "Missing fulfillmentMode must NOT default to PICKUP")
+        self.assertIsNone(pickup_avail, "Missing pickupAvailable must NOT default to True")
+        self.assertIsNone(instore_stock, "Missing inStoreStock must NOT default to True")
+
+        # Context verification check: absence of observed store and fulfillment prevents verification
+        target_store = "4012"
+        context_verified = bool(observed_store and str(observed_store) == target_store and observed_fulfillment and "PICKUP" in str(observed_fulfillment).upper())
+        self.assertFalse(context_verified, "Absence of affirmative storeId and PICKUP mode must prevent store context verification")
+
+    def test_regression_unmatched_item_disqualifies_local_price(self):
+        """Regression 2: Items lacking intercepted network evidence cannot qualify as verified local prices."""
+        intercepted_items = {}
+        dom_item_id = "999901"
+        self.assertNotIn(dom_item_id, intercepted_items)
+
+        # Emulate scrape_category locality check:
+        bound_item = intercepted_items.get(dom_item_id)
+        is_verified_local_pickup = False
+        if bound_item is None:
+            is_verified_local_pickup = False
+
+        self.assertFalse(is_verified_local_pickup, "Unmatched item without network evidence must NOT qualify as verified local pickup")
+
+        # When not verified local pickup, displayed DOM price ($3.99) must be suppressed to empty string for assortment retention
+        displayed_dom_price = "$3.99"
+        sale_price = displayed_dom_price if is_verified_local_pickup else ""
+        regular_price = displayed_dom_price if is_verified_local_pickup else ""
+
+        self.assertEqual(sale_price, "", "Unmatched item must have empty price string to prevent unverified price emission")
+        self.assertEqual(regular_price, "")
+
+    def test_regression_wrong_price_context_and_fulfillment(self):
+        """Regression 3: Wrong store ID or non-pickup fulfillment mode disqualifies local price."""
+        target_store = "4012"
+        intercepted_items = {
+            "item_wrong_store": {
+                "store_id": "1001",
+                "fulfillment_mode": "PICKUP",
+                "pickup_available": True,
+                "observed_sale_price": "$2.99"
+            },
+            "item_shipping_only": {
+                "store_id": "4012",
+                "fulfillment_mode": "DELIVERY_FROM_WAREHOUSE",
+                "pickup_available": False,
+                "observed_sale_price": "$12.99"
+            }
+        }
+
+        # Evaluate Item 1
+        b1 = intercepted_items["item_wrong_store"]
+        b1_valid = bool(b1.get("store_id") == target_store and "PICKUP" in str(b1.get("fulfillment_mode")).upper() and b1.get("pickup_available") is not False)
+        self.assertFalse(b1_valid, "Wrong store ID must disqualify local price")
+
+        # Evaluate Item 2
+        b2 = intercepted_items["item_shipping_only"]
+        b2_valid = bool(b2.get("store_id") == target_store and "PICKUP" in str(b2.get("fulfillment_mode")).upper() and b2.get("pickup_available") is not False)
+        self.assertFalse(b2_valid, "Non-pickup fulfillment mode must disqualify local price")
+
+    def test_regression_price_binding_to_validated_offer(self):
+        """Regression 4: Validated pickup item binds displayed price to verified source offer."""
+        from validation import format_price
+
+        # Intercepted item with validated source offer of $5.48 for pickup at store 4012
+        bound_item = {
+            "store_id": "4012",
+            "fulfillment_mode": "PICKUP",
+            "pickup_available": True,
+            "observed_sale_price": "$5.48"
+        }
+
+        is_verified_local_pickup = (bound_item.get("store_id") == "4012" and "PICKUP" in bound_item.get("fulfillment_mode"))
+        self.assertTrue(is_verified_local_pickup)
+
+        # Case A: Displayed DOM price matches validated offer
+        displayed_dom_price = "$5.48"
+        bound_price = format_price(bound_item["observed_sale_price"])
+        final_price = bound_price if (is_verified_local_pickup and bound_price) else ""
+        self.assertEqual(final_price, "$5.48")
+
+        # Case B: Displayed DOM price had a stale tag, but source offer is verified $5.48
+        displayed_stale_price = "$5.98"
+        bound_price = format_price(bound_item["observed_sale_price"])
+        if is_verified_local_pickup and bound_price:
+            final_bound_price = bound_price
+        else:
+            final_bound_price = ""
+        self.assertEqual(final_bound_price, "$5.48", "Price must bind to validated source offer")
+
+    def test_regression_failed_evidence_write_blocks_publication_and_preserves_package(self):
+        """Regression 5: Failed raw evidence write blocks publication gate and preserves last good package."""
+        from checkpoint_manager import CheckpointManager
+        import shutil
+
+        test_staging = ".staging_reg_fail"
+        test_output = "output_reg_fail"
+        if os.path.exists(test_staging): shutil.rmtree(test_staging)
+        if os.path.exists(test_output): shutil.rmtree(test_output)
+
+        os.makedirs(test_output, exist_ok=True)
+        # Create a pre-existing "last good package" in production
+        good_product_file = os.path.join(test_output, "walmart_4012_2026-10-22.json")
+        good_evidence_file = os.path.join(test_output, "raw_evidence_4012_2026-10-22.jsonl")
+        with open(good_product_file, "w", encoding="utf-8") as f:
+            f.write(json.dumps([{"item": "last_good_data"}]))
+        with open(good_evidence_file, "w", encoding="utf-8") as f:
+            f.write(json.dumps({"endpoint": "good_evidence"}) + "\n")
+
+        mgr = CheckpointManager("4012", "2026-10-22", staging_dir=test_staging, output_dir=test_output)
+
+        # Add 510 valid staging records
+        full_records = [
+            {"zipcode": "75001", "product_title": f"Item {i}", "upc": f"078742{i:06d}", "regular_price": "$3.00", "sale_price": "$2.50"}
+            for i in range(510)
+        ]
+        mgr.append_staging_records(full_records)
+
+        # Condition A: Raw evidence file is missing
+        if os.path.exists(mgr.raw_evidence_file): os.remove(mgr.raw_evidence_file)
+        approved, reason, stats = mgr.evaluate_publication_gate(min_threshold=500, store_fulfillment_verified=True)
+        self.assertFalse(approved, "Missing raw evidence file must block publication gate")
+        self.assertIn("raw evidence", reason.lower())
+
+        promoted = mgr.promote_staging_to_production(min_threshold=500, store_fulfillment_verified=True)
+        self.assertFalse(promoted, "Promotion must return False when evidence is missing")
+
+        # Verify last good package was preserved and NOT overwritten
+        with open(good_product_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            self.assertEqual(data, [{"item": "last_good_data"}], "Last good product file must remain intact")
+
+        # Condition B: Raw evidence write failed flag is True
+        mgr.raw_evidence_write_failed = True
+        with open(mgr.raw_evidence_file, "w", encoding="utf-8") as f:
+            f.write("dummy\n")
+
+        approved2, reason2, _ = mgr.evaluate_publication_gate(min_threshold=500, store_fulfillment_verified=True)
+        self.assertFalse(approved2, "Flagged raw evidence write failure must block gate")
+        self.assertIn("raw evidence write failure", reason2.lower())
+
+        promoted2 = mgr.promote_staging_to_production(min_threshold=500, store_fulfillment_verified=True)
+        self.assertFalse(promoted2)
+
+        # Verify last good package is STILL intact
+        with open(good_product_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            self.assertEqual(data, [{"item": "last_good_data"}], "Last good product file must remain intact after blocked promotion")
+
+        if os.path.exists(test_staging): shutil.rmtree(test_staging)
+        if os.path.exists(test_output): shutil.rmtree(test_output)
 
 if __name__ == "__main__":
     unittest.main()

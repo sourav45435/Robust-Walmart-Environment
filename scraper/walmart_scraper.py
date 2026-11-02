@@ -2,7 +2,7 @@
 walmart_scraper.py
 Production-Ready Walmart Scraper for Microsoft Azure
 Location-Specific • Multi-Location • Azure Ready
-Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -> main, v2.5.0-collector-verified)
+Commit: d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac (HEAD -> main)
 """
 
 import asyncio
@@ -123,30 +123,62 @@ class WalmartProductionScraper:
                 target_endpoints = ["/orchestra/home/graphql", "/graphql/browse", "/graphql/search", "_next/data"]
                 if any(ep in resp.url for ep in target_endpoints) and resp.status == 200:
                     text_data = await resp.text()
-                    if self.store.store_number in text_data and ("PICKUP" in text_data or "pickup" in text_data):
-                        price_bearing_response_verified = True
                     try:
                         j_data = json.loads(text_data)
                         search_res = j_data.get("data", {}).get("searchResult", {}) or j_data.get("data", {}).get("browse", {})
                         stacks = search_res.get("itemStacks", []) or [search_res.get("itemStack", {})]
+
+                        # Rule 1: Keep unknown context unknown! Never fill missing storeId or fulfillmentMode with target defaults
+                        observed_store_id = search_res.get("storeId")
+                        if observed_store_id is None:
+                            observed_store_id = j_data.get("data", {}).get("storeId")
+
+                        observed_fulfillment_mode = search_res.get("fulfillmentMode")
+                        if observed_fulfillment_mode is None:
+                            observed_fulfillment_mode = j_data.get("data", {}).get("fulfillmentMode")
+
+                        # Observed store and fulfillment verification: require both store ID match and PICKUP fulfillment mode
+                        if observed_store_id and str(observed_store_id) == str(self.store.store_number):
+                            if observed_fulfillment_mode and "PICKUP" in str(observed_fulfillment_mode).upper():
+                                price_bearing_response_verified = True
+
                         for stk in stacks:
                             for itm in stk.get("items", []):
                                 itm_id = str(itm.get("usItemId") or itm.get("id") or "").strip()
                                 if itm_id:
+                                    # Never default pickupAvailable or inStoreStock to True if absent
+                                    f_info = itm.get("fulfillment")
+                                    pickup_avail = None
+                                    instore_stock = None
+                                    if isinstance(f_info, dict):
+                                        pickup_avail = f_info.get("pickupAvailable")
+                                        instore_stock = f_info.get("inStoreStock")
+
+                                    p_info = itm.get("priceInfo") or {}
+                                    line_p = p_info.get("linePrice") or p_info.get("currentPrice", {}).get("priceString") or itm.get("price") or ""
+
                                     self.intercepted_items[itm_id] = {
-                                        "store_id": str(search_res.get("storeId") or self.store.store_number),
-                                        "fulfillment_mode": str(search_res.get("fulfillmentMode") or "PICKUP"),
-                                        "pickup_available": bool(itm.get("fulfillment", {}).get("pickupAvailable", True)),
-                                        "in_store_stock": bool(itm.get("fulfillment", {}).get("inStoreStock", True)),
+                                        "store_id": str(observed_store_id) if observed_store_id is not None else None,
+                                        "fulfillment_mode": str(observed_fulfillment_mode) if observed_fulfillment_mode is not None else None,
+                                        "pickup_available": pickup_avail,
+                                        "in_store_stock": instore_stock,
+                                        "observed_sale_price": str(line_p) if line_p else "",
                                     }
-                        # Durable persistence of original evidence to survive restarts
+
+                        # Rule 3: Record the actual captured request rather than configured dummy fields
+                        captured_req = {
+                            "url": resp.request.url if hasattr(resp, "request") else resp.url,
+                            "method": resp.request.method if hasattr(resp, "request") else "GET",
+                            "headers": {k: v for k, v in resp.request.headers.items() if k.lower() != "cookie"} if hasattr(resp, "request") and hasattr(resp.request, "headers") else {},
+                            "post_data": resp.request.post_data if hasattr(resp, "request") and hasattr(resp.request, "post_data") else None
+                        }
                         self.checkpoint_mgr.append_raw_evidence(
                             endpoint=resp.url,
-                            request_data={"store_id": self.store.store_number, "postal_code": self.store.zipcode, "fulfillment_type": "PICKUP"},
+                            request_data=captured_req,
                             response_payload=j_data
                         )
-                    except Exception:
-                        pass
+                    except Exception as e:
+                        logger.debug(f"[RESPONSE PARSE] Error processing response payload: {e}")
             except Exception:
                 pass
 
@@ -167,36 +199,21 @@ class WalmartProductionScraper:
             has_store = cookie_map.get("walmart.store.id") == self.store.store_number
             has_pickup = cookie_map.get("walmart.fulfillment.type") == "PICKUP" or cookie_map.get("walmart.store.pickup") == "true"
 
-            if not has_store:
-                logger.error(f"[STORE VERIFICATION FAILED] walmart.store.id cookie mismatch. Expected {self.store.store_number}, got {cookie_map.get('walmart.store.id')}")
+            if not has_store or not has_pickup:
+                logger.error(f"[STORE VERIFICATION FAILED] Store cookies unverified. Store match: {has_store}, Pickup match: {has_pickup}")
                 self.store_fulfillment_verified = False
                 return False
 
-            if not has_pickup:
-                logger.error(f"[STORE VERIFICATION FAILED] Missing verified pickup fulfillment cookie. Expected PICKUP, got {cookie_map.get('walmart.fulfillment.type')}")
-                self.store_fulfillment_verified = False
-                return False
-
-            # Verification 2: Price-bearing source response / DOM state verification
-            # Inspect authoritative store context in Next.js __NEXT_DATA__ or price-bearing API responses
-            authoritative_context_verified = False
-            try:
-                next_data_str = await page.evaluate("() => window.__NEXT_DATA__ ? JSON.stringify(window.__NEXT_DATA__) : ''")
-                if next_data_str and self.store.store_number in next_data_str:
-                    authoritative_context_verified = True
-            except Exception:
-                pass
-
-            content = await page.content()
-            store_in_dom = self.store.store_number in content or self.store.zipcode in content
-
-            if not (price_bearing_response_verified or authoritative_context_verified or store_in_dom):
-                logger.error(f"[STORE VERIFICATION FAILED] Retailer price-bearing source responses did not reflect Store #{self.store.store_number} or ZIP {self.store.zipcode}. Aborting to prevent unverified collection.")
+            # Verification 2: Observed source-bound response verification
+            # Substrings in HTML or cookies alone do NOT prove store/pickup context.
+            # Must observe affirmative confirmation of target store and PICKUP fulfillment mode in price-bearing network payload.
+            if not price_bearing_response_verified:
+                logger.error(f"[STORE VERIFICATION FAILED] Target Store #{self.store.store_number} and PICKUP fulfillment mode were not observed in retailer network response.")
                 self.store_fulfillment_verified = False
                 return False
 
             self.store_fulfillment_verified = True
-            logger.info(f"[FULFILLMENT CONFIRMED] Store #{self.store.store_number} ({self.store.address}) affinity verified in retailer source responses. Cookie verification: {has_store}, Fulfillment: PICKUP, Source Response Verified: True")
+            logger.info(f"[FULFILLMENT CONFIRMED] Store #{self.store.store_number} ({self.store.address}) and PICKUP mode affirmatively observed in retailer network response.")
             return True
         except Exception as e:
             logger.error(f"[STORE VERIFICATION FAILED] Exception during store context verification: {e}")
@@ -311,22 +328,51 @@ class WalmartProductionScraper:
                     if not title:
                         continue
 
-                    # Source-Bound Locality Verification Check:
-                    # Inspect item fulfillment badge to ensure pricing belongs to target store and PICKUP context
+                    # Item-Level Locality & Validated Source Offer Verification:
+                    # Require returned fulfillment mode to be PICKUP and bind actual displayed price to validated source offer.
+                    # Missing/wrong context must prevent qualification as a verified local price, while eligible unavailable products remain retained.
+                    bound_item = self.intercepted_items.get(raw_item_id)
+                    is_verified_local_pickup = False
+                    is_eligible_store_assortment = True
+
+                    if bound_item is None:
+                        # Missing intercepted item:
+                        # Cannot establish observed local store, fulfillment mode, or source offer.
+                        # Missing context prevents qualification as a verified local price.
+                        is_verified_local_pickup = False
+                        logger.debug(f"[UNMATCHED ITEM] No intercepted network payload for item {raw_item_id} ('{title}'). Cannot qualify as verified local price.")
+                    else:
+                        observed_store = bound_item.get("store_id")
+                        observed_fulfillment = bound_item.get("fulfillment_mode")
+                        pickup_available = bound_item.get("pickup_available")
+
+                        # Require observed store ID to match target store
+                        if not observed_store or str(observed_store) != str(self.store.store_number):
+                            logger.warning(f"[WRONG STORE CONTEXT] Item {raw_item_id} observed store {observed_store} != {self.store.store_number}. Disqualifying local price.")
+                            is_verified_local_pickup = False
+                            is_eligible_store_assortment = False
+                        # Require returned fulfillment mode to be PICKUP
+                        elif not observed_fulfillment or "PICKUP" not in str(observed_fulfillment).upper():
+                            logger.warning(f"[WRONG FULFILLMENT CONTEXT] Item {raw_item_id} fulfillment {observed_fulfillment} is not PICKUP. Disqualifying local price.")
+                            is_verified_local_pickup = False
+                        elif pickup_available is False:
+                            # Part of store catalog but pickup currently unavailable/out-of-stock
+                            is_verified_local_pickup = False
+                        else:
+                            is_verified_local_pickup = True
+
+                    # DOM badge verification as secondary guard against non-local fulfillment
                     badge_elem = await el.query_selector('[data-automation-id="fulfillment-badge"], [data-testid="fulfillment-badge"]')
                     badge_str = (await badge_elem.inner_text()).lower() if badge_elem else ""
 
-                    # Exclude non-local items: shipping-only or central delivery
                     if "shipping only" in badge_str or "delivery from central warehouse" in badge_str:
-                        logger.debug(f"[EXCLUDE NON-LOCAL] Item {raw_item_id} is shipping-only. Excluded from local store catalog.")
-                        continue
+                        logger.debug(f"[EXCLUDE NON-LOCAL] Item {raw_item_id} has non-local delivery badge. Excluded from local store catalog.")
+                        is_verified_local_pickup = False
+                        is_eligible_store_assortment = False
 
-                    # Verify against bound network payload if captured
-                    bound_item = self.intercepted_items.get(raw_item_id, {})
-                    if bound_item and bound_item.get("store_id"):
-                        if bound_item.get("store_id") != self.store.store_number:
-                            logger.warning(f"[LOCALITY MISMATCH] Item {raw_item_id} storeId {bound_item.get('store_id')} != {self.store.store_number}. Skipping.")
-                            continue
+                    # Exclude non-local assortment items completely
+                    if not is_eligible_store_assortment:
+                        continue
 
                     # 5. Extract Weight & filter approximate wording
                     weight = ""
@@ -352,21 +398,36 @@ class WalmartProductionScraper:
                         bool(await el.query_selector('[data-testid="out-of-stock-badge"], span:has-text("Out of stock")'))
                     )
 
-                    # 7. Extract Prices
+                    # 7. Extract Prices and Bind to Validated Source Offer
                     price_elem = await el.query_selector('[data-automation-id="product-price"], span.w_iUH7')
                     price_text = (await price_elem.inner_text()) if price_elem else ""
-                    sale_price = format_price(price_text)
+                    raw_sale_price = format_price(price_text)
 
                     was_price_elem = await el.query_selector('[data-automation-id="was-price"], span.strike')
                     was_price_text = (await was_price_elem.inner_text()) if was_price_elem else ""
-                    regular_price = format_price(was_price_text) if was_price_text else sale_price
+                    raw_reg_price = format_price(was_price_text) if was_price_text else raw_sale_price
 
-                    # Rule: Retain unavailable store-assortment products even when price is missing!
-                    if not sale_price or is_out_of_stock:
-                        if is_out_of_stock or not sale_price:
-                            sale_price = ""
-                            regular_price = ""
-                            logger.info(f"[ASSORTMENT CONTINUITY] Retained unavailable store assortment item '{title}' with empty price per specification.")
+                    # Price Context & Source Offer Binding:
+                    # Missing/wrong context must prevent qualification as a verified local price!
+                    # While eligible unavailable products remain retained with empty string prices.
+                    if is_verified_local_pickup and not is_out_of_stock:
+                        observed_offer_price = bound_item.get("observed_sale_price") if bound_item else ""
+                        if observed_offer_price:
+                            formatted_offer = format_price(str(observed_offer_price))
+                            if formatted_offer and raw_sale_price and formatted_offer != raw_sale_price:
+                                logger.info(f"[PRICE BINDING] Bound displayed price {raw_sale_price} to validated source offer {formatted_offer} for item {raw_item_id}.")
+                                sale_price = formatted_offer
+                            else:
+                                sale_price = raw_sale_price or formatted_offer
+                        else:
+                            sale_price = raw_sale_price
+                        regular_price = raw_reg_price if raw_reg_price else sale_price
+                    else:
+                        # Missing/wrong context or out of stock:
+                        # Retain eligible store-assortment product with empty price string per specification
+                        sale_price = ""
+                        regular_price = ""
+                        logger.info(f"[ASSORTMENT RETENTION] Retained item '{title}' with empty prices (unverified context or unavailable assortment).")
 
                     # 8. Directly Scraped PPM
                     ppm_elem = await el.query_selector('[data-automation-id="product-unit-price"], span:has-text("/oz"), span:has-text("/fl oz"), span:has-text("/lb"), span:has-text("/ct")')

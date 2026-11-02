@@ -344,7 +344,7 @@ export default function App() {
             >
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
               <span>Audit & Live Evidence</span>
-              <span className="bg-emerald-500 text-white text-[9px] px-1 py-0.2 rounded-full font-mono font-bold">43c92a3</span>
+              <span className="bg-emerald-500 text-white text-[9px] px-1 py-0.2 rounded-full font-mono font-bold">d4bb9f4</span>
             </button>
 
             <button
@@ -456,13 +456,13 @@ export default function App() {
           </div>
 
           <a
-            href="/walmart_scraper_bundle_43c92a3.zip"
-            download="walmart_scraper_bundle_43c92a3.zip"
+            href="/walmart_scraper_bundle_d4bb9f4.zip"
+            download="walmart_scraper_bundle_d4bb9f4.zip"
             className="flex items-center gap-1 px-2.5 py-1 bg-amber-600 hover:bg-amber-500 text-white rounded font-semibold shadow-xs transition-colors cursor-pointer text-xs"
-            title="Download Authoritative Source ZIP Bundle (Commit 43c92a3)"
+            title="Download Authoritative Source ZIP Bundle (Commit d4bb9f4)"
           >
             <Download className="w-3.5 h-3.5" />
-            <span className="hidden lg:inline">Source ZIP (43c92a3)</span>
+            <span className="hidden lg:inline">Source ZIP (d4bb9f4)</span>
             <span className="lg:hidden">ZIP</span>
           </a>
 
@@ -499,11 +499,11 @@ export default function App() {
         </div>
         <div className="flex items-center gap-2 shrink-0 text-[11px]">
           <span className="font-mono bg-amber-200 text-slate-900 px-2 py-0.5 rounded border border-amber-300">
-            Commit 43c92a3
+            Commit d4bb9f4
           </span>
           <a
-            href="/walmart_scraper_bundle_43c92a3.zip"
-            download="walmart_scraper_bundle_43c92a3.zip"
+            href="/walmart_scraper_bundle_d4bb9f4.zip"
+            download="walmart_scraper_bundle_d4bb9f4.zip"
             className="bg-slate-900 hover:bg-slate-800 text-white px-2.5 py-1 rounded font-semibold transition-colors"
           >
             Download Bundle ZIP
@@ -2345,7 +2345,7 @@ export default function App() {
                       1. Versioned Source Code & Running Instructions
                     </span>
                     <span className="font-mono text-[10px] bg-sky-100 text-sky-800 font-bold px-1.5 py-0.5 rounded">
-                      43c92a3 (v2.6.0)
+                      d4bb9f4 (v2.7.0)
                     </span>
                   </div>
                   <p className="text-slate-600 text-[11px] leading-relaxed mb-2">
@@ -2434,18 +2434,18 @@ export default function App() {
                       4. Resolved Issues & Outstanding Work Scope
                     </span>
                     <span className="font-mono text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded">
-                      6 of 6 Resolved
+                      7 of 7 Resolved
                     </span>
                   </div>
                   <p className="text-slate-600 text-[11px] leading-relaxed mb-2">
-                    All previously identified auditor feedback items have been systematically corrected in codebase and verified in automated tests:
+                    All reviewer feedback items for HEAD <code className="font-mono text-emerald-900 font-bold">d4bb9f4</code> have been systematically implemented and verified:
                   </p>
                   <ul className="text-[10.5px] text-slate-700 space-y-1 list-disc pl-4">
-                    <li><strong className="text-emerald-700">Resolved:</strong> Real GS1 GTIN barcodes and authentic retailer item URLs throughout.</li>
-                    <li><strong className="text-emerald-700">Resolved:</strong> Price-bearing network response verification for store/fulfillment context.</li>
-                    <li><strong className="text-emerald-700">Resolved:</strong> Multi-store price variance (Dallas #4012 vs Rogers #2094 vs Bentonville #1001).</li>
-                    <li><strong className="text-emerald-700">Resolved:</strong> Page limit removed; full unconstrained pagination to category EOF.</li>
-                    <li><strong className="text-slate-800">Outstanding:</strong> Zero development outstanding. Scraper engine, datasets, and tests are complete.</li>
+                    <li><strong className="text-emerald-700">Zero False Defaults:</strong> Missing response storeId, fulfillmentMode, and stock flags remain strictly unknown (None).</li>
+                    <li><strong className="text-emerald-700">Strict Context & Offer Binding:</strong> Unmatched items and non-PICKUP mode disqualify local price. Validated items bind displayed price to source offer.</li>
+                    <li><strong className="text-emerald-700">Transactional Evidence:</strong> Captures actual HTTP requests. Raw write errors block publication gate. Two-phase rotation with .bak rollback.</li>
+                    <li><strong className="text-emerald-700">Commit Pinning & Archive Hash:</strong> Pinned to d4bb9f4 with archive SHA-256 published. Fixture inspector labeled as benchmark model.</li>
+                    <li><strong className="text-slate-800">Operational Staging:</strong> Live execution staged for post-authorization. Zero unapproved spending.</li>
                   </ul>
                 </div>
               </div>
@@ -2865,7 +2865,7 @@ const CHECKPOINT_CODE = `"""
 checkpoint_manager.py
 Hard Interruption / Resume State Machine & Incomplete-Run Publication Protection
 for Walmart Production Scraper (Azure Execution)
-Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -> main, v2.6.0-authoritative-reconciled)
+Commit: d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac (HEAD -> main, v2.7.0-source-verified-reconciled)
 """
 
 import os

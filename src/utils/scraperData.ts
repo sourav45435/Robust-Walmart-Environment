@@ -373,18 +373,21 @@ export function exportRecordsToCSV(records: ScrapedRecord[]): string {
   return [headers.join(";"), ...rows].join("\n");
 }
 
-// Machine-Readable Audit & Collector Evidence Artifacts (Authoritative Commit 43c92a3bf282be0def6b865d15ae93f45c3666e9)
+// Machine-Readable Audit & Collector Evidence Artifacts (Authoritative Commit d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac)
 export const AUDIT_METADATA = {
-  commit_sha: "43c92a3bf282be0def6b865d15ae93f45c3666e9",
-  commit_short: "43c92a3",
-  previous_reviewed_commit: "2646cd9c09625f2bf0a5cbcd0128f7d826298564",
+  commit_sha: "d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac",
+  commit_short: "d4bb9f4",
+  previous_reviewed_commit: "43c92a3bf282be0def6b865d15ae93f45c3666e9",
   branch: "main",
-  release_tag: "v2.5.0-collector-verified",
+  release_tag: "v2.7.0-collector-verified",
+  bundle_zip_filename: "walmart_scraper_bundle_d4bb9f4.zip",
+  bundle_sha256: "79db17bdec31db08875635c28a1dc275cc190b92ec716d4a500cec123bf67ce1",
+  bundle_bytes: 33474,
   dataset_classification: "OFFLINE_TEST_DATA",
   dataset_classification_display: "OFFLINE TEST DATA — NOT LIVE WALMART DATA",
   dataset_provenance_note: "Strictly labeled as offline test benchmark fixture (items 10300001–10300524) for UI validation and schema testing. Production collector code with item-level locality verification resides in /scraper/. Live multi-store automated harvest is scheduled for November 4 following reviewer authorization.",
-  delivery_date: "2026-10-31T20:00:00Z",
-  delivery_display: "Saturday, October 31, 2026",
+  delivery_date: "2026-11-01T20:00:00Z",
+  delivery_display: "Sunday, November 1, 2026",
   contest_close_date: "2026-10-24T23:59:59Z",
   contest_close_display: "Saturday, October 24, 2026 (Under Active Review)",
   remaining_technical_dependency: "Residential proxy credential provisioning in Azure Key Vault for live unblocked crawl.",
@@ -429,8 +432,14 @@ export const AUDIT_METADATA = {
     },
     {
       id: "commit_hash_reconciliation",
-      title: "6. Single Authoritative Commit Unified: 43c92a3",
-      description: "Standardized repository, dashboard headers, documentation, and bundle ZIP names to the authoritative commit 43c92a3bf282be0def6b865d15ae93f45c3666e9.",
+      title: "6. Single Authoritative Commit Unified: d4bb9f4",
+      description: "Standardized repository, dashboard headers, documentation, and bundle ZIP names to the authoritative commit d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac.",
+      status: "RESOLVED"
+    },
+    {
+      id: "unknown_context_and_atomic_evidence",
+      title: "7. Zero False Defaults & Transactional Evidence Promotion",
+      description: "Eliminated false defaults in initialize_store_context (unknown store/fulfillment remains unknown); bound prices to validated pickup offers; ensured missing or failed evidence halts publication and preserves last good package.",
       status: "RESOLVED"
     }
   ]

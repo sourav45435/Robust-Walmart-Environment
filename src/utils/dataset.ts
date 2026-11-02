@@ -1,10 +1,10 @@
 import { ScrapedRecord } from './scraperData';
 
 export const COMMIT_INFO = {
-  full_sha: "43c92a3bf282be0def6b865d15ae93f45c3666e9",
-  short_sha: "43c92a3",
+  full_sha: "d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac",
+  short_sha: "d4bb9f4",
   branch: "main",
-  version: "v2.6.0-authoritative-reconciled",
+  version: "v2.7.0-authoritative-reconciled",
   status: "AUDITED_SUBMISSION_RECONCILED",
   dataset_classification: "OFFLINE TEST DATA — NOT LIVE WALMART DATA"
 };

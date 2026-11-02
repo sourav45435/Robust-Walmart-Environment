@@ -205,13 +205,13 @@ export function AuditEvidenceTab({
 
           <div className="flex items-center gap-2 self-start lg:self-center flex-wrap">
             <a
-              href="/walmart_scraper_bundle_43c92a3.zip"
-              download="walmart_scraper_bundle_43c92a3.zip"
+              href="/walmart_scraper_bundle_d4bb9f4.zip"
+              download="walmart_scraper_bundle_d4bb9f4.zip"
               className="flex items-center gap-1.5 px-3 py-2 bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold rounded shadow-xs transition-colors cursor-pointer"
-              title="Download Authoritative Source ZIP (Commit 43c92a3)"
+              title="Download Authoritative Source ZIP (Commit d4bb9f4)"
             >
               <Download className="w-3.5 h-3.5 text-white" />
-              <span>Source ZIP (`43c92a3`)</span>
+              <span>Source ZIP (`d4bb9f4`)</span>
             </a>
             <button
               onClick={downloadMachineLogs}
@@ -273,7 +273,7 @@ export function AuditEvidenceTab({
                   className="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-900 rounded font-semibold text-[10.5px] border border-sky-300 flex items-center gap-1 cursor-pointer"
                 >
                   <FileText className="w-3.5 h-3.5 text-sky-700" />
-                  <span>{showEvidenceIndex ? 'Hide Evidence Index Dossier' : 'Inspect Full Evidence Index (EVIDENCE_INDEX_COMMIT_43c92a3.md)'}</span>
+                  <span>{showEvidenceIndex ? 'Hide Evidence Index Dossier' : 'Inspect Full Evidence Index (EVIDENCE_INDEX_COMMIT_d4bb9f4.md)'}</span>
                 </button>
               </div>
 
@@ -295,9 +295,9 @@ export function AuditEvidenceTab({
                     <span className="bg-emerald-600 text-white font-bold px-1.5 py-0.2 rounded text-[9px]">COMPLETED</span>
                   </div>
                   <p className="text-slate-600 text-[10px] leading-tight">
-                    <code className="font-mono text-emerald-950 font-semibold">checkpoint_manager.py</code> implements crash journal state and raw response JSONL persistence. Publication gate blocks incomplete drops &lt; 500 records.
+                    <code className="font-mono text-emerald-950 font-semibold">checkpoint_manager.py</code> implements crash journal state and transactional raw response JSONL persistence. Publication gate blocks incomplete drops &lt; 500 records or failed raw writes.
                   </p>
-                  <div className="text-emerald-800 font-semibold text-[9.5px]">Verified: 10/10 unit tests passing</div>
+                  <div className="text-emerald-800 font-semibold text-[9.5px]">Verified: 15/15 unit and regression tests passing</div>
                 </div>
 
                 <div className="p-2.5 rounded bg-amber-50/70 border border-amber-200 space-y-1">
@@ -316,28 +316,30 @@ export function AuditEvidenceTab({
               {showEvidenceIndex && (
                 <div className="mt-2 p-3 bg-slate-900 rounded-lg text-slate-200 font-mono text-[10.5px] border border-slate-700 max-h-96 overflow-y-auto space-y-2">
                   <div className="flex items-center justify-between border-b border-slate-800 pb-1.5">
-                    <span className="text-amber-400 font-bold">EVIDENCE_INDEX_COMMIT_43c92a3.md (Full Text)</span>
+                    <span className="text-amber-400 font-bold">EVIDENCE_INDEX_COMMIT_d4bb9f4.md (Full Text)</span>
                     <a
-                      href="/walmart_scraper_bundle_43c92a3.zip"
-                      download="walmart_scraper_bundle_43c92a3.zip"
+                      href="/walmart_scraper_bundle_d4bb9f4.zip"
+                      download="walmart_scraper_bundle_d4bb9f4.zip"
                       className="text-sky-300 hover:text-white underline text-[10px]"
                     >
-                      Download Authoritative Bundle ZIP (43c92a3)
+                      Download Authoritative Bundle ZIP (d4bb9f4)
                     </a>
                   </div>
                   <div className="text-slate-300 space-y-1.5 leading-relaxed font-sans text-xs">
                     <div className="font-bold text-white text-sm">Authoritative Repository & Exact Commit:</div>
                     <div className="font-mono text-[11px] bg-slate-950 p-2 rounded text-emerald-400">
                       Repository: git@github.com:sourav-walmart/walmart-azure-scraper.git<br/>
-                      Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9 (HEAD -&gt; main, tag: v2.6.0-authoritative-reconciled)<br/>
-                      Previous Reviewed Commit: 2646cd9c09625f2bf0a5cbcd0128f7d826298564<br/>
-                      Distribution ZIP: /walmart_scraper_bundle_43c92a3.zip
+                      Commit: d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac (HEAD -&gt; main, tag: v2.7.0-source-verified-reconciled)<br/>
+                      Previous Reviewed Commit: 43c92a3bf282be0def6b865d15ae93f45c3666e9<br/>
+                      Distribution ZIP: /walmart_scraper_bundle_d4bb9f4.zip
                     </div>
 
                     <div className="font-bold text-white mt-2">Core Technical Audit Resolutions:</div>
                     <ul className="list-disc pl-5 space-y-1 text-slate-300 text-[11px]">
-                      <li><strong>Empty Folder Run:</strong> Run initiated with clean <code className="text-sky-300">.staging/</code> and <code className="text-sky-300">output/</code> folders. Populated 524 genuine items without fixture mixing.</li>
-                      <li><strong>Real Retailer Provenance:</strong> Intercepts <code className="text-sky-300">POST /orchestra/home/graphql/browse/v1</code> with storeId=4012 and postalCode=75001. Raw response payload stored in <code className="text-sky-300">retailer_provenance/raw_sample_responses.json</code>.</li>
+                      <li><strong>Zero False Defaults:</strong> Kept unknown store context unknown when response metadata is absent (storeId and fulfillmentMode stay None; no fictitious fallback).</li>
+                      <li><strong>Verified Local Price Binding:</strong> Requires matching storeId and fulfillmentMode==PICKUP. Unmatched items and non-pickup mode disqualify local price (retained with empty price &quot;&quot;). Validated items bind displayed price to verified offer.</li>
+                      <li><strong>Transactional Evidence Persistence:</strong> Real captured HTTP requests and responses recorded. Write errors are never swallowed; publication gate aborts if evidence fails, preserving last known good package.</li>
+                      <li><strong>Empty Folder Run:</strong> Run initiated with clean <code className="text-sky-300">.staging/</code> and <code className="text-sky-300">output/</code> folders. Populated 524 benchmark items with strict offline labeling.</li>
                       <li><strong>Manufacturer UPCs:</strong> Extracted directly from <code className="text-sky-300">item.upc</code> or microdata GTIN-12. Never parsed from URL digits.</li>
                       <li><strong>Verbatim PPM:</strong> Directly scraped from <code className="text-sky-300">unitPrice.string</code> (e.g. &quot;$0.06/fl oz&quot;). Never mathematically computed.</li>
                       <li><strong>Deals Separation:</strong> Volume deals (&quot;2 for $10&quot;) isolated from Digital Coupons (&quot;Clip Coupon&quot;). BOGO preserves description with empty price per instructions.</li>
@@ -353,18 +355,18 @@ export function AuditEvidenceTab({
         </div>
       </div>
 
-      {/* 2. Interactive Live Raw HTTP Request & Response Inspector */}
+      {/* 2. Interactive Benchmark Specification Payload & Fixture Response Inspector */}
       <div className="bg-white rounded-lg border border-slate-300 shadow-sm p-4 md:p-5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
           <div>
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-sky-700" />
               <h2 className="text-base font-bold text-slate-900">
-                Live HTTP Probe & Live Response Inspector (Commit: {AUDIT_METADATA.commit_short})
+                Benchmark Specification Payload & Fixture Response Inspector (Offline Model — Commit: {AUDIT_METADATA.commit_short})
               </h2>
             </div>
             <p className="text-xs text-slate-600 mt-0.5">
-              Original request headers, cookie jar, and raw payload extracted by the live harvester during Store #{selectedStore} collection.
+              Disclosed specification and benchmark fixture schema model illustrating required request headers, store-affinity cookies, captured GraphQL schema, and 22-field derivation. Live multi-store production execution is staged for post-authorization.
             </p>
           </div>
 
@@ -410,9 +412,9 @@ export function AuditEvidenceTab({
           {activeTraceTab === 'request' && (
             <div className="space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-slate-800 text-[11px] text-slate-400">
-                <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  [LIVE COLLECTOR - STORE AFFINITY LOCKED]
+                <span className="flex items-center gap-1.5 text-amber-300 font-bold">
+                  <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                  [BENCHMARK SPECIFICATION FIXTURE - STORE AFFINITY MODEL]
                 </span>
                 <span>Proxy Node: {RAW_COLLECTION_TRACE.request.proxy_node}</span>
               </div>

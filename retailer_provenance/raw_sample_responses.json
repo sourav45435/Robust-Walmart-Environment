@@ -2,7 +2,7 @@
   "provenance_metadata": {
     "artifact_classification": "DEVELOPMENT_BENCHMARK_SPECIFICATION_FIXTURE",
     "description": "Baseline specification and GraphQL schema contract fixture for Store #4012 (Dallas, TX 75201) parser test verification. Documented as development baseline fixture (Items 10300001–10300524), pending live proxy harvest.",
-    "source_repository_commit": "43c92a3bf282be0def6b865d15ae93f45c3666e9",
+    "source_repository_commit": "d4bb9f4c4c2c3c5bafb569edf4e255a844b37bac",
     "collection_protocol": "GraphQL browse v1 schema contract for parser validation",
     "retailer_endpoint": "https://www.walmart.com/orchestra/home/graphql/browse/v1",
     "store_number": "4012",
